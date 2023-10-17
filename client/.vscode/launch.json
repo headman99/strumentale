@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        
+        {
+            "type": "chrome",
+            "name": "https://app-trovaprezzi-pbk47gfo0-headman99.vercel.app/",
+            "request": "launch",
+            "url": "https://app-trovaprezzi-pbk47gfo0-headman99.vercel.app/"
+        }
+    ]
+}
