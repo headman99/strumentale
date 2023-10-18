@@ -14,6 +14,7 @@ const CompareTable = ({ data }) => {
                 {
                     <div className="table-body">
                         {chunk.map(site => {
+                            console.log("site = " , site)
                             const result = data.filter(
                                 el => el?.siteName === site.siteName
                             )[0]

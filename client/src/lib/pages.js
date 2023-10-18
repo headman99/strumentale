@@ -59,7 +59,7 @@ const pages = [
     {
         id: '010',
         url: 'https://shop.scavino.it/',
-        sitName: 'scavino',
+        siteName: 'scavino',
         logo: `scavino.jpg`
     },
     {

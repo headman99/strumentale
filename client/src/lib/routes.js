@@ -1,5 +1,3 @@
-import { save_result } from './api'
-
 export const ROUTES = {
     USER: {
         CIAO: '/api/ciao',

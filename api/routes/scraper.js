@@ -23,7 +23,8 @@ router.get('/scrape_pages', async (req, res) => {
     process.setMaxListeners(20)
     scrapingFunction(instrument, filters)
     .then(data => {
-        res.status(200).json(data)
+        console.log("data=", data)
+        res.status(200).json(data?data:[])
     })
     .catch(error => {
         console.log(error)

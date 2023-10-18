@@ -17,7 +17,7 @@ const cronex = '*/30 * * * * *' // Every 30''
 
 const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortController }) => {
     const [searchParam, setSearchParam] = useState('')
-    const [compareData, setCompareData] = useState({ item_list: [] })
+    const [compareData, setCompareData] = useState([])
     const [switchView, setSwitchView] = useState(false)
     const [minMax, setMinMax] = useState({
         min:'',
@@ -139,6 +139,8 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
 
         let reshapedData = []
         let setOfSitesName = [...new Set(data.item_list.map(e => e.siteName))]
+        console.log(setOfSitesName)
+        console.log(data.item_list)
         setOfSitesName.forEach(siteName => {
             const all = data.item_list.filter(el => el.siteName == siteName)
             if (all.length === 0) {
@@ -152,8 +154,8 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
                     all[0]
                 )
             )
-        })
-
+        }) 
+        console.log(reshapedData)
         return reshapedData
     }
 
