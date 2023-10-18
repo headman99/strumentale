@@ -14,8 +14,7 @@ html {
  */
 body {
   margin: 0;
-  overflow-x: hidden;
-  overflow-y: hidden;
+ 
 }
 
 /**
@@ -886,6 +885,15 @@ h5 {
 .img-frame {
   width: 200px;
   height: 200px;
+  object-fit: contain;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-description-container{
+  width: 120px;
   object-fit: contain;
   overflow: hidden;
   display: flex;

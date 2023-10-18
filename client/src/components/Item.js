@@ -48,7 +48,7 @@ const Item = ({ data, saved, handleSaveItem, handleUnsaveItem }) => {
                                             height: 'auto'
                                         }}
                                         className="img-fluid img-responsive rounded product-image"
-                                        src={img}
+                                        src={!img.includes("data:")?img:''}
                                         alt={`Immagine non disponibile, collegarsi al sito.`}
                                         onError={(e) => {
                                             e.currentTarget.setAttribute("src",`images/${siteName}.${imgFileTypes[siteName]}`)
@@ -80,6 +80,17 @@ const Item = ({ data, saved, handleSaveItem, handleUnsaveItem }) => {
                                 </div>
                                 {/*<div class="mt-1 mb-1 spec-1"><span>Unique design</span><span class="dot"></span><span>For men</span><span class="dot"></span><span>Casual<br /></span></div>
                                 <p class="text-justify text-truncate para mb-0">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.<br></br></p> */}
+                            </div>
+                            <div className='img-description-container'>
+                                    <img
+                                        style={{
+                                            maxWidth: '100%',
+                                            height: 'auto'
+                                        }}
+                                        className="img-fluid img-responsive rounded product-image"
+                                        src={`images/${siteName}.${imgFileTypes[siteName]}`}
+                                        alt={' '}
+                                    /> 
                             </div>
                         </div>
                         <div className="align-items-center align-content-center col-md-3 border-left mt-1">

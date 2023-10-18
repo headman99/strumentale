@@ -20,6 +20,7 @@ const CompareTable = ({ data }) => {
                             return (
                                 <div className="table-cell" key={site}>
                                     <a
+                                        target='_blank'
                                         className="cell-image"
                                         href={result?.url}>
                                         <img

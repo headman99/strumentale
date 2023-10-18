@@ -7,7 +7,7 @@ import Loading from './Loading'
  * Component in charge of displaying the results list
  */
 function Results(props) {
-    if (props.error) return <div>Failed to load</div>
+    if (props.error) return <div className='no-data'>Caricamento fallito, ricaricare al pagina</div>
     if (!props.data) return <div />
 
     const item_list = props.data.item_list
@@ -18,7 +18,7 @@ function Results(props) {
         save_item({
             name: name,
             url: url,
-            img: !img.includes("data:")?img:''
+            img: img
         })
             .then(() => {
                 props.transition_alert({

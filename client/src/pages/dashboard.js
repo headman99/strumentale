@@ -6,11 +6,11 @@ import dynamic from 'next/dynamic'
 import TransitionAlerts from '@/components/TransitionAlerts'
 import { useRouter } from 'next/router'
 import axios, { axiosInstance_node } from '../lib/axios'
-
+import DashBar from '@/components/DashBar'
 
 //import DashBar from '@/components/DashBar';
 
-const DashBar = dynamic(() => import('@/components/DashBar'), { ssr: false })
+//const DashBar = dynamic(() => import('@/components/DashBar'), { ssr: false })
 
 const Dashboard = () => {
     const [data, setData] = useState({ item_list: [] })
