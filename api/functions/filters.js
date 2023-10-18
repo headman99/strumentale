@@ -4,7 +4,7 @@
  * @param {*} parameters - parameters of the filter
  * @returns 
  */
-export function generalPriceFilter(itemList, parameters) {
+function generalPriceFilter(itemList, parameters) {
     const filteredList = itemList.filter(
         item =>
             item.price >= parameters.minPrice &&
@@ -18,7 +18,7 @@ export function generalPriceFilter(itemList, parameters) {
  * @param {*} parameters - parameters of the filter
  * @returns 
  */
-export function generalRateFilter(itemList, parameters) {
+function generalRateFilter(itemList, parameters) {
     if (parameters.threshold > 0) {
         const filteredList = itemList.filter(
             item => {
@@ -39,7 +39,7 @@ export function generalRateFilter(itemList, parameters) {
  * @param {*} parameters - parameters of the filter
  * @returns 
  */
-export function generalShippingFilter(itemList, parameters) {
+function generalShippingFilter(itemList, parameters) {
     const filteredList = itemList.filter(
         item => {
             if (item.freeShipment) {

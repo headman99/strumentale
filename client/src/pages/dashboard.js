@@ -79,27 +79,7 @@ const Dashboard = () => {
         refreshWhenOffline: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false
-    })
-
-    //Detect whenever the user is about to leave the page to perform a fetch abort
-
-
-    /*useEffect(() => {
-        const exitingFunction = () => {
-          if(abortController.current)
-            abortController.current.abort();
-            console.log("La ricerca è stata abortita")
-        };
-    
-        router.events.on("routeChangeStart", exitingFunction);
-        
-        //cleanup function
-        return () => {
-          console.log("unmounting component...");
-          router.events.off("routeChangeStart", exitingFunction);
-        };
-      }, [])*/
-    
+    })   
 
     return (
         <AppLayout>
