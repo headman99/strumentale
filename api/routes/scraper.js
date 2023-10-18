@@ -23,7 +23,6 @@ router.get('/scrape_pages', async (req, res) => {
     process.setMaxListeners(20)
     scrapingFunction(instrument, filters)
     .then(data => {
-        console.log("data=", data)
         res.status(200).json(data?data:[])
     })
     .catch(error => {
@@ -42,7 +41,6 @@ router.get('/scheduleCrawler', async (req, res) => {
             scrapingFunction(instrument, filters)
             .then(data => {
                 result = data.item_list[0]
-                console.log(result)
                 res.status(200)
             })
         })

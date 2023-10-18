@@ -4,7 +4,7 @@ const utils = require('../functions/utils')
 const { generalPriceFilter, generalRateFilter, generalShippingFilter } = require("./filters")
 
 const ITEMS_PER_SITE = 5
-const ELEMENT_LOAD_TIMEOUT = 10000 // miliseconds
+const ELEMENT_LOAD_TIMEOUT = 8000 // miliseconds
 
 const GENERAL_FILTERS = {
     price: generalPriceFilter,
@@ -14,35 +14,31 @@ const GENERAL_FILTERS = {
 
 async function scrapingFunction(instrument, filters) {
 
-    // Response dictionary
-    let data = { item_list: [] }
-
     // Create an instance of the browser
-    const browser1 = await pt.launch({
-        headless: false,
-        args: ['--no-sandbox']
-    })
-    const browser2 = await pt.launch({
-        headless: false,
+    const browser = await pt.launch({
+        headless: 'new',
+        defaultViewport: null,
         args: ['--no-sandbox']
     })
 
     // Array of promises
-    const scrapePromises = pages.map(async page => {
-        let browser = null
-        if (page.id <= 6) {
-            browser = browser1
-        } else {
-            browser = browser2
-        }
-        await scrapePage(browser, instrument, page, data)
-        return data
-    })
+    const scrapePromises = pages.map(async page => 
+        await scrapePage(browser, instrument, page)
+    )
 
     // Return the promise of resolving all the promises
     return new Promise((resolve, reject) => {
         Promise.all(scrapePromises)
-        .then(() => {
+        .then(promisesData => {
+
+            // Response dictionary
+            let data = { item_list: [] }
+
+            // Merge the data from each promise
+            for (const pageData of promisesData) {
+                data.item_list = data.item_list.concat(pageData.item_list)
+            }
+
             // All scraping tasks have completed
             utils.sortRelevance(
                 instrument,
@@ -54,7 +50,7 @@ async function scrapingFunction(instrument, filters) {
             const filtersConfig = JSON.parse(filters)
             for (let filter in filtersConfig) {
                 if (filtersConfig[filter].activated) {
-                    console.log(filtersConfig)
+                    //console.log(filtersConfig)
                     data.item_list = GENERAL_FILTERS[filter](
                         data.item_list,
                         filtersConfig[filter].parameters
@@ -70,11 +66,9 @@ async function scrapingFunction(instrument, filters) {
             reject(error)
         })
         .finally(async () => {
-            browser1.close() 
-            browser2.close() 
+            browser.close()
         })
-    }
-    )
+    })
 }
 /**
  * Function to scrape a single page
@@ -82,13 +76,13 @@ async function scrapingFunction(instrument, filters) {
  * @param {*} instrument
  * @param {*} data
  */
-async function scrapePage(browser, instrument, page, data) {
+async function scrapePage(browser, instrument, page) {
     const driver = await browser.newPage()
     try {
         await driver.setViewport({ width: 1000, height: 500 })
         await driver.goto(page['url']) // Navigate to the page
-        await scrapeContent(driver, instrument, page, data)
-             // Call the scraper for each page
+        const data = await scrapeContent(driver, instrument, page)
+        return data
     } catch (err) {
         // Handle errors for this specific page
         console.log(`ERROR on ${page['url']}: ${err}`)
@@ -101,8 +95,8 @@ async function scrapePage(browser, instrument, page, data) {
  * @param {*} page 
  * @param {*} data 
  */
-async function scrapeContent(driver, instrument, _page_, data) {
-    const page = _page_
+async function scrapeContent(driver, instrument, page) {
+    let data = { item_list: [] }
     try {
         // RETRIEVE SEARCHBAR
         const input = await driver.waitForSelector(
@@ -224,6 +218,7 @@ async function scrapeContent(driver, instrument, _page_, data) {
         console.log('GENERAL ERROR: ' + error)
     }
     await driver.close()
+    return data
 }
 
 module.exports = {
