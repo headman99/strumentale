@@ -16,12 +16,8 @@ router.get('/', async (req, res) => {
 
 router.get('/scrape_pages', async (req, res) => {
 
-    // TODO: Delete after testing
     const instrument = req.query.instrument
-    const filters = {}
-
-    //const instrument = req.query.instrument
-    //const filters = req.query.filters
+    const filters = req.query.filters
 
     // TODO: Make the function return only the data and send a response from here
     process.setMaxListeners(20)
@@ -35,10 +31,9 @@ router.get('/scrape_pages', async (req, res) => {
 })
 
 router.get('/scheduleCrawler', async (req, res) => {
-    //TODO: Delete this after testing
-    const instrument = "Yamaha YTR-2330"
-    const filters = {}
-    req.query.title = "Yamaha YTR-2330"
+
+    const instrument = req.query.instrument
+    const filters = req.query.filters
     
     // TODO: Once the data is gotten, take the first element of the list
     try {
@@ -58,8 +53,6 @@ router.get('/scheduleCrawler', async (req, res) => {
 })
 
 router.get('/cancelCrawler', async (req, res) => {
-    //TODO: Delete this after testing
-    req.query.title = "Yamaha YTR-2330"
 
     try {
         schedule.cancelJob(req.query.title)
