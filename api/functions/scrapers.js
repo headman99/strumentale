@@ -18,16 +18,26 @@ async function scrapingFunction(instrument, filters) {
     let data = { item_list: [] }
 
     // Create an instance of the browser
-    const browser = await pt.launch({
-        headless: 'new',
+    const browser1 = await pt.launch({
+        headless: false,
+        args: ['--no-sandbox']
+    })
+    const browser2 = await pt.launch({
+        headless: false,
         args: ['--no-sandbox']
     })
 
     // Array of promises
-    const scrapePromises = pages.map(page => 
-        scrapePage(browser, instrument, page, data)
-    )
-
+    const scrapePromises = pages.map(async page => {
+        let browser = null
+        if (page.id <= 6) {
+            browser = browser1
+        } else {
+            browser = browser2
+        }
+        await scrapePage(browser, instrument, page, data)
+        return data
+    })
 
     // Return the promise of resolving all the promises
     return new Promise((resolve, reject) => {
@@ -60,7 +70,8 @@ async function scrapingFunction(instrument, filters) {
             reject(error)
         })
         .finally(async () => {
-            browser.close() 
+            browser1.close() 
+            browser2.close() 
         })
     }
     )
@@ -114,6 +125,14 @@ async function scrapeContent(driver, instrument, _page_, data) {
         // GET ITEMS FROM LIST
         let items = await list.$$(page.selectors.product)
         items = items.slice(0, ITEMS_PER_SITE)
+
+        // Scroll to bottom of the page to make lazyload images load
+        if (page.selectors.bottom) {
+            const bottom = await driver.waitForSelector(page.selectors.bottom, {
+                timeout: ELEMENT_LOAD_TIMEOUT
+            })
+            await bottom.scrollIntoView()
+        }
         
         // GET DATA ITERATING OVER ITEMS
         for (const item of items) {

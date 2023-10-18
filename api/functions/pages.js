@@ -23,7 +23,8 @@ const pages = [
                 'td:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(3)',
             url: '.pdlist',
             price: '.d-block.fontSize14.marginBottom5.bold',
-            discountedPrice: '.productSpecialPrice.bold'
+            discountedPrice: '.productSpecialPrice.bold',
+            bottom: '.footdiscl'
         }
     },
     {
@@ -40,7 +41,8 @@ const pages = [
             name: 'h3',
             description: '.description',
             url: '.list-row-container',
-            price: 'div:nth-child(2) > span:nth-child(1) > span:nth-child(1)'
+            price: 'div:nth-child(2) > span:nth-child(1) > span:nth-child(1)',
+            bottom: '.footer-copy'
         }
     },
     {
@@ -59,7 +61,8 @@ const pages = [
             description:
                 'div:nth-child(1) > a:nth-child(2) > div:nth-child(1) > div:nth-child(3)',
             url: '.product__content',
-            price: '.fx-typography-price-primary.fx-price-group__primary.product__price-primary'
+            price: '.fx-typography-price-primary.fx-price-group__primary.product__price-primary',
+            bottom: '.copyright'
         }
     },
     {
@@ -77,7 +80,8 @@ const pages = [
             name: 'div:nth-child(2) > h3:nth-child(1)',
             description: 'div:nth-child(2) > p:nth-child(3)',
             url: 'a',
-            price: '.prz'
+            price: '.prz',
+            bottom: '#trck'
         }
     },
     {
@@ -88,13 +92,13 @@ const pages = [
         postProcess: postProcessors.changeFormat,
         selectors: {
             searchBar: '.site-search__controls__input',
-            productsList: 'ol',
-            product: 'li',
+            productsList: '.rc-listing-grid__content',
+            product: '.rc-listing-grid__item',
             productContent: '.rc-listing-card__inner',
             image: 'img',
             name: '.rc-listing-card__header a',
             url: '.rc-listing-card__header a',
-            price: '.rc-price-block__price'
+            price: '.rc-price-block__price',
         }
     },
     {
@@ -113,7 +117,7 @@ const pages = [
             name: '[role=heading]',
             url: '.s-item__link',
             price: '.s-item__price',
-            discountedPrice: 'span'
+            discountedPrice: 'span',
         }
     },
     {
@@ -172,7 +176,7 @@ const pages = [
         url: 'https://shop.scavino.it',
         siteName: 'scavino',
         postProcess: postProcessors.changeFormat,
-        imageDatabaseUrl:'https://shop.scavino.it',
+        imageDatabaseUrl:'https://shop.scavino.it/',
         selectors: {
             searchBar: '.txt_search',
             productsList: '.listProduct',
