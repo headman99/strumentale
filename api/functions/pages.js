@@ -172,7 +172,7 @@ const pages = [
         url: 'https://shop.scavino.it',
         siteName: 'scavino',
         postProcess: postProcessors.changeFormat,
-        imageDatabaseUrl:'https://shop.scavino.it/',
+        imageDatabaseUrl:'https://shop.scavino.it',
         selectors: {
             searchBar: '.txt_search',
             productsList: '.listProduct',

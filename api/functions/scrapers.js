@@ -136,6 +136,10 @@ async function scrapeContent(driver, instrument, _page_, data) {
                 item_data.url = await item.$eval(page.selectors.url, url => {
                     return url.getAttribute('href');
                 });
+                
+                if(!item_data.url.includes("http"))
+                    item_data.url = `${page?.url}${!item_data?.url.startsWith('/')? '/':''}${item_data?.url}`
+
                 if (page.rateRetriever) {
                     item_data.rate = await page.rateRetriever(item)
                 }
@@ -181,12 +185,12 @@ async function scrapeContent(driver, instrument, _page_, data) {
                     throw new Error('Field not found')
                 }
 
-                item_data.img = await item.$eval(page.selectors.image, image => {
+                const img = await item.$eval(page.selectors.image, image => {
                     return image.getAttribute('src');
                 });
 
-                if(page?.imageDatabaseUrl)
-                    item_data.img = `${page.imageDatabaseUrl}${item_data.img}`
+                item_data.img = page?.imageDatabaseUrl?page.imageDatabaseUrl + img:img;
+                    
 
                 item_data.siteName = page.siteName
          
