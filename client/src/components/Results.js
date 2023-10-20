@@ -11,7 +11,6 @@ function Results(props) {
     if (!props.data) return <div />
 
     const item_list = props.data.item_list
-    console.log(props.data  )
     const handleSaveItem = data => {
         const { name, url, img } = data
 

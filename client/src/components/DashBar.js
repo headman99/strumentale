@@ -11,17 +11,24 @@ import { FaBalanceScaleLeft } from 'react-icons/fa'
 import CompareTable from './CompareTable'
 import { HiViewList } from 'react-icons/hi'
 import { ToggleButton } from 'react-bootstrap'
-import schedule from 'node-schedule';
+import schedule from 'node-schedule'
 
 const cronex = '*/30 * * * * *' // Every 30''
 
-const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortController }) => {
+const DashBar = ({
+    fetchData,
+    data,
+    error,
+    isLoading,
+    transition_alert,
+    abortController
+}) => {
     const [searchParam, setSearchParam] = useState('')
     const [compareData, setCompareData] = useState([])
     const [switchView, setSwitchView] = useState(false)
     const [minMax, setMinMax] = useState({
-        min:'',
-        max:''
+        min: '',
+        max: ''
     })
     const [rating, setRating] = useState('')
     const [freeShipping, setFreeShipping] = useState(false)
@@ -56,7 +63,7 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
     }
 
     const handleSave = () => {
-
+        if(!searchParam) return null;
         // Request format to take the data from the DB
         const request = {
             title: `${searchParam}`,
@@ -65,23 +72,32 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
 
         // Make request to the DB
         save_survey(request)
-        .then(res => {
-            if (res.status == 204) {
-                transition_alert({
-                    severity: 'success',
-                    title: 'Successo',
-                    text: 'Ricerca salvata'
-                })
-            }
-        })
-        .catch(err => {
-            console.log(err.response.data.exception)
-            transition_alert({
-                severity: 'warning',
-                title: 'Errore',
-                text: 'Errore nel salvataggio della ricerca.' + err?.response?.data?.exception
+            .then(res => {
+                if (res.status == 204) {
+                    transition_alert({
+                        severity: 'success',
+                        title: 'Successo',
+                        text: 'Ricerca salvata'
+                    })
+                }
             })
-        })
+            .catch(err => {
+                console.log(err.response.status)
+                if (err?.response?.status == 401)
+                  transition_alert({
+                        severity: 'warning',
+                        title: 'Errore',
+                        text:'Errore nel salvataggio della ricerca. Effettua il Login per continuare.'
+                    })  
+                else
+                    transition_alert({
+                        severity: 'warning',
+                        title: 'Errore',
+                        text:
+                            'Errore nel salvataggio della ricerca.' +
+                            err?.response?.data?.exception
+                })
+            })
 
         //TODO: Schedule the search
         const filters = {
@@ -102,9 +118,9 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
         // Schedule the execution of the webcrawler based on the crono expresion defined
         // The first argument is the name used to identify the job
         // TODO: Instead of calling here the scheduling, I should make a request to my API asking for it to do it
-        schedule.scheduleJob(`${searchParam}`, cronex, () => {
+        /*schedule.scheduleJob(`${searchParam}`, cronex, () => {
             fetchData(searchParam, filters)
-        })
+        })*/
     }
 
     const handleKeyDown = event => {
@@ -118,11 +134,10 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
         let min = minMax?.min
         let max = minMax?.max
 
-        if(max!=='' && min!=='' && min>max)
-            max = min
+        if (max !== '' && min !== '' && min > max) max = min
         setMinMax({
-            min: min?parseInt(min):min,
-            max: max?parseInt(max):max
+            min: min ? parseInt(min) : min,
+            max: max ? parseInt(max) : max
         })
     }
 
@@ -139,8 +154,6 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
 
         let reshapedData = []
         let setOfSitesName = [...new Set(data.item_list.map(e => e.siteName))]
-        console.log(setOfSitesName)
-        console.log(data.item_list)
         setOfSitesName.forEach(siteName => {
             const all = data.item_list.filter(el => el.siteName == siteName)
             if (all.length === 0) {
@@ -150,12 +163,13 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
             reshapedData.push(
                 all.reduce(
                     (max, current) =>
-                        current.normalizedRelevance > max.normalizedRelevance ? current : max,
+                        current.normalizedRelevance > max.normalizedRelevance
+                            ? current
+                            : max,
                     all[0]
                 )
             )
-        }) 
-        console.log(reshapedData)
+        })
         return reshapedData
     }
 
@@ -233,7 +247,13 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
                                                         placeholder="Min"
                                                         type={'number'}
                                                         value={minMax?.min}
-                                                        onChange={(e) => setMinMax({...minMax,min:e.target.value})}
+                                                        onChange={e =>
+                                                            setMinMax({
+                                                                ...minMax,
+                                                                min: e.target
+                                                                    .value
+                                                            })
+                                                        }
                                                         onBlur={handleOnBlur}
                                                         style={{
                                                             paddingLeft: 5
@@ -245,8 +265,14 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
                                                         placeholder="Max"
                                                         type={'number'}
                                                         value={minMax?.max}
-                                                        onChange={(e) => setMinMax({...minMax,max:e.target.value})}
-                                                        onBlur={ handleOnBlur}
+                                                        onChange={e =>
+                                                            setMinMax({
+                                                                ...minMax,
+                                                                max: e.target
+                                                                    .value
+                                                            })
+                                                        }
+                                                        onBlur={handleOnBlur}
                                                         style={{
                                                             paddingLeft: 5
                                                         }}></input>
@@ -255,20 +281,29 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
                                             <div className="input-field">
                                                 <div className="input-select">
                                                     <input
-                                                        style={{padding:10}}
+                                                        style={{ padding: 10 }}
                                                         className="number"
                                                         type={'number'}
                                                         max={5}
-                                                        onBlur = {() => {
-                                                            let new_value = rating<5?rating:5;
-                                                            setRating(Math.round(new_value*2)/2)
+                                                        onBlur={() => {
+                                                            let new_value =
+                                                                rating < 5
+                                                                    ? rating
+                                                                    : 5
+                                                            setRating(
+                                                                Math.round(
+                                                                    new_value *
+                                                                        2
+                                                                ) / 2
+                                                            )
                                                         }}
                                                         placeholder="Recensione"
                                                         value={rating}
                                                         onChange={e => {
-                                                            setRating(e.target.value)
-                                                        }
-                                                        }></input>
+                                                            setRating(
+                                                                e.target.value
+                                                            )
+                                                        }}></input>
                                                 </div>
                                             </div>
                                             <div className="input-field">
@@ -277,21 +312,27 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
                                                         <Dropdown.Toggle
                                                             className="dropdown toggle btn-outline"
                                                             id="dropdown-basic">
-                                                            {freeShipping ?  "Spedizione gratuita" : "Spedizione"}
+                                                            {freeShipping
+                                                                ? 'Spedizione gratuita'
+                                                                : 'Spedizione'}
                                                         </Dropdown.Toggle>
                                                         <Dropdown.Menu>
                                                             <Dropdown.Item
                                                                 className="dropdown item"
                                                                 href="#/action-2"
                                                                 onClick={e =>
-                                                                    handleChangeShipping(false)
+                                                                    handleChangeShipping(
+                                                                        false
+                                                                    )
                                                                 }>
                                                                 -
                                                             </Dropdown.Item>
                                                             <Dropdown.Item
                                                                 className="dropdown item"
                                                                 onClick={e =>
-                                                                    handleChangeShipping(true)
+                                                                    handleChangeShipping(
+                                                                        true
+                                                                    )
                                                                 }
                                                                 href="#/action-3">
                                                                 Spedizione
@@ -330,7 +371,11 @@ const DashBar = ({ fetchData, data, error, isLoading, transition_alert,abortCont
                                         Salva
                                     </button>
                                     <button
-                                        disabled={isLoading || searchParam.length === 0}
+                                        disabled={
+                                            isLoading ||
+                                            searchParam?.length === 0 ||
+                                            searchParam === ''
+                                        }
                                         className="btn-search"
                                         onClick={e => handleSearch(e)}>
                                         Cerca

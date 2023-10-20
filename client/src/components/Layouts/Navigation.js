@@ -130,6 +130,7 @@ const Navigation = ({ user }) => {
                                 active={router.pathname === '/dashboard'}>
                                 Dashboard
                             </ResponsiveNavLink>
+                            
                         </div>
 
                         {/* Responsive Settings Options */}

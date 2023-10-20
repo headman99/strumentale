@@ -324,6 +324,10 @@ progress {
   /* 2 */
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
 /**
  * Remove the default vertical scrollbar in IE.
  */
@@ -475,6 +479,10 @@ legend {
 
 .background-color{
   background-color: #3a1f78;
+}
+
+.main_container{
+  transition: all 2s ease-in-out;
 }
 
 .s009 form {

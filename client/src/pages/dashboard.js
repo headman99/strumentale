@@ -1,20 +1,21 @@
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
-import { useRef, useState } from 'react'
+import { useRef, useState,useEffect } from 'react'
 import useSWR from 'swr'
 import dynamic from 'next/dynamic'
 import TransitionAlerts from '@/components/TransitionAlerts'
-import { useRouter } from 'next/router'
 import axios, { axiosInstance_node } from '../lib/axios'
-import DashBar from '@/components/DashBar'
+import Link from 'next/link'
+import secureLocalStorage from 'react-secure-storage'
+//import DashBar from '@/components/DashBar'
 
 //import DashBar from '@/components/DashBar';
 
-//const DashBar = dynamic(() => import('@/components/DashBar'), { ssr: false })
+const DashBar = dynamic(() => import('@/components/DashBar'), { ssr: false })
 
 const Dashboard = () => {
     const [data, setData] = useState({ item_list: [] })
-    const dataRef = useRef(null)
+    
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false) // Wether the data is loadingù
     const [transitionAlertOptions, setTransitionAlertOptions] = useState(null)
@@ -44,7 +45,9 @@ const Dashboard = () => {
             abortController.current = controller
             const res = await axiosInstance_node.get(urlQuery)
             setData(res.data)
-            dataRef.current = res.data
+            console.log('dati=' , res.data)
+            if(res.data)
+                secureLocalStorage.setItem("data",res.data);
             setError(null)
         } catch (err) {
             setError(err)
@@ -61,7 +64,6 @@ const Dashboard = () => {
         // Set loading state to true
         setIsLoading(true)
         // Define the query object
-        console.log(filters)
         const query = {
             instrument: searchParam,
             filters: filters ? JSON.stringify(filters) : filters
@@ -81,8 +83,30 @@ const Dashboard = () => {
         revalidateOnReconnect: false
     })   
 
+    //Decide wheter to display data present in localstorage
+    useEffect(() => {
+        const secure_data = secureLocalStorage.getItem("data")
+        console.log(secure_data)
+        if(secure_data)
+            setData(secure_data)
+    },[])
+
     return (
-        <AppLayout>
+        <AppLayout
+        >
+            <div className='background-color'>
+                <div
+                    className="relative flex items-top justify-center  sm:items-center sm:pt-0">
+                    <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block " >
+                        <Link
+                            href="/login"
+                            style={{color:'white'}}
+                            className="ml-4 text-sm  underline">
+                            Login
+                        </Link>
+                    </div>
+                </div>
+            </div>
             <Head>
                 <title>Strumentale</title>
             </Head>

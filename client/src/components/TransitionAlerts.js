@@ -12,7 +12,7 @@ export default function TransitionAlerts({ options, style }) {
     React.useEffect(() => {
         if (options) {
             setOpen(true)
-            const delay = 2000 // 5 seconds in milliseconds
+            const delay = 4000 // 4 seconds in milliseconds
             const wait = async () => {
                 await new Promise(resolve => {
                     setTimeout(() => {

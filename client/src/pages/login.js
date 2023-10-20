@@ -75,7 +75,7 @@ const Login = ({redirectPath}) => {
                 </div>
                 <AuthCard
                 logo={
-                <Link href="/">
+                <Link href="https://strumentale.it">
                     <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                 </Link>
             }
