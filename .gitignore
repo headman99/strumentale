@@ -6,6 +6,7 @@
 /clientpnp.js
 
 /api/node_modules
+/api/functions/backend.js
 
 # testing
 /client/coverage
