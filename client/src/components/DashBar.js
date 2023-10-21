@@ -13,7 +13,6 @@ import { HiViewList } from 'react-icons/hi'
 import { ToggleButton } from 'react-bootstrap'
 import schedule from 'node-schedule'
 
-const cronex = '*/30 * * * * *' // Every 30''
 
 const DashBar = ({
     fetchData,
@@ -34,19 +33,10 @@ const DashBar = ({
     const [freeShipping, setFreeShipping] = useState(false)
     const router = useRouter()
 
-    useEffect(() => {
-        // Check if there is query (means we came from /searches)
-        if (router.query.q) {
-            setSearchParam(router.query.q)
-            fetchData(router.query.q)
-        }
-    }, [router.asPath])
-
-    const handleSearch = e => {
-        e.preventDefault()
-        const filters = {
+    function buildFilters(){
+        return {
             price: {
-                activated: minMax?.min && minMax?.max ? true : false,
+                activated: (minMax?.min && minMax?.max) ? true : false,
                 parameters: { minPrice: minMax?.min, maxPrice: minMax?.max }
             },
             rate: {
@@ -58,17 +48,45 @@ const DashBar = ({
                 parameters: { freeShipment: freeShipping }
             }
         }
+    }
 
+    useEffect(() => {
+        // Check if there is query (means we came from /searches)
+        if (router.query.q) {
+            console.log(router.query)
+            const {price,shipping,rating,q} = router.query
+
+            setSearchParam(q)
+            setMinMax({
+                min:price?price.split('-')[0]:'',
+                max:price?price.split('-')[1]:''
+            })
+            setFreeShipping(shipping==1)
+            setRating(parseFloat(rating))
+        }
+    }, [router.asPath])
+
+    const handleSearch = e => {
+        e.preventDefault()
+        if(!searchParam) return null;
+        const filters = buildFilters();
         fetchData(searchParam, filters)
     }
 
     const handleSave = () => {
         if(!searchParam) return null;
+        const filters = buildFilters();
+        console.log(filters)
         // Request format to take the data from the DB
-        const request = {
+        let request = {
             title: `${searchParam}`,
-            text: searchParam
+            text: searchParam,
+            free_shipping_favorite:filters.shipment.parameters.freeShipment,
+            rating_favorite:filters.rate.parameters.threshold
         }
+
+        if(filters.price.activated)
+            request = {...request,price_range_favorite:`${filters.price.parameters.minPrice}-${filters.price.parameters.maxPrice}`}
 
         // Make request to the DB
         save_survey(request)
@@ -98,22 +116,6 @@ const DashBar = ({
                             err?.response?.data?.exception
                 })
             })
-
-        //TODO: Schedule the search
-        const filters = {
-            price: {
-                activated: minMax?.min && minMax?.max ? true : false,
-                parameters: { minPrice: minMax?.min, maxPrice: minMax?.max }
-            },
-            rate: {
-                activated: rating !== '' && rating !== undefined,
-                parameters: { threshold: rating ? rating : '' }
-            },
-            shipment: {
-                activated: freeShipping,
-                parameters: { freeShipment: freeShipping }
-            }
-        }
 
         // Schedule the execution of the webcrawler based on the crono expresion defined
         // The first argument is the name used to identify the job

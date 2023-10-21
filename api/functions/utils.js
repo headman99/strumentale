@@ -153,7 +153,7 @@ function sortRelevance(query, data) {
 
     // Calculate relevance scores for all items
     const maxRelevanceScore = items.reduce((maxScore, item) => {
-        const relevance = lcs_score(query, item.name)
+        const relevance = lcs_score(query, item?.name)
         item.normalizedRelevance = relevance // Store normalized relevance
         return Math.max(maxScore, relevance)
     }, 0)

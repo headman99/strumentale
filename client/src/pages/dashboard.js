@@ -27,7 +27,7 @@ const Dashboard = () => {
      * @param {string} url - string containing the url to the webcrawler
      * @param {Object} query - query with the parameters for the search
      */
-    const   fetcher = async (url, query) => {
+    const fetcher = async (url, query) => {
         // Turn the query entries into one string
         const query_str = Object.entries(query)
             .map(

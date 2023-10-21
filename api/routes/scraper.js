@@ -1,17 +1,35 @@
 const router = require("express").Router();
-const pt = require("puppeteer");
-const { Builder, Browser, By, Key, until } = require("selenium-webdriver");
-const chrome = require("selenium-webdriver/chrome");
-const utils = require("../functions/utils");
+
+/* They'll be nedeed when scheduleCrawler and /cancelCrawler are activated*/ 
 const { scrapingFunction } = require("../functions/scrapers");
-const pages = require("../functions/pages");
-const schedule = require("node-schedule");
 const { axiosInstance } = require("../functions/axios");
+//const nodeCron = require("node-cron")
+//const schedule = require("node-schedule"); replaced with node-cron
 
 
 const CRONEX = "*/30 * * * * *"; // Every 30''
 
-//TRIAL
+
+/*Basic function to trigger the scraper based on filters*/
+router.get("/scrape_pages", async (req, res) => {
+  const instrument = req.query.instrument;
+  const filters = req.query?.filters?req.query?.filters:null;
+  const first = req.query?.first;
+
+  // TODO: Make the function return only the data and send a response from here
+  scrapingFunction(instrument, filters)
+    .then((data) => {
+      const response = first ? data.item_list[0] : data;
+      res.status(200).json(response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+/* API TO TEST THAT PARALLEL CRAWLERS ARE EXECUTED CORRECTLY. YOU CAN TRY IT ON POSTMAN*/
+/*It sends a request to the PHP api to get the surveys, then it executes parallel instances of the crawler and return the result to the php backend*/
+
 router.get("/save_scrape_result", async (req, res) => {
   // Function to process a batch of parameters concurrently
   function processBatch(params) {
@@ -27,7 +45,7 @@ router.get("/save_scrape_result", async (req, res) => {
   }
 
   try {
-    const survs = await axiosInstance.get("/get_surveys");
+    const survs = await axiosInstance.get("/node/get_surveys");
     const concurrencyLimit = 3;
 
     // Split the array of parameters into batches of size 'concurrencyLimit'
@@ -59,22 +77,10 @@ router.get("/save_scrape_result", async (req, res) => {
   }
 });
 
-router.get("/scrape_pages", async (req, res) => {
-  const instrument = req.query.instrument;
-  const filters = req.query?.filters;
-  const first = req.query?.first;
 
-  // TODO: Make the function return only the data and send a response from here
-  scrapingFunction(instrument, filters)
-    .then((data) => {
-      const response = first ? data.item_list[0] : data;
-      res.status(200).json(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
-
+/** SCHEDULE CRAWLER API FUNCTIONS**/
+/** They are disabled by default. They allow the user to automatically schedule a survey crawler based on the CRONEX string or diable it.**/
+/* 
 router.get("/scheduleCrawler", async (req, res) => {
 
   function processBatch(params) {
@@ -91,7 +97,7 @@ router.get("/scheduleCrawler", async (req, res) => {
 
   // TODO: Once the data is gotten, take the first element of the list
   try {
-    schedule.scheduleJob(req.query.title, CRONEX, async () => {
+    nodeCron.schedule(CRONEX, async () => {
        try {
     const survs = await axiosInstance.get("/get_surveys");
     const concurrencyLimit = 3;
@@ -123,6 +129,9 @@ router.get("/scheduleCrawler", async (req, res) => {
   } catch (error) {
     console.log("ERRORE", error);
   }
+    }, {
+      scheduled:true,
+      timezone:'Europe/Rome'
     });
     res.sendStatus(200);
   } catch {
@@ -139,5 +148,6 @@ router.get("/cancelCrawler", async (req, res) => {
     res.sendStatus(500);
   }
 });
+*/
 
 module.exports = router;

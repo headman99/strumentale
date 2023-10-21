@@ -10,6 +10,7 @@ import { BsTextLeft, BsGraphUpArrow } from 'react-icons/bs'
 import Trend from './Trend'
 import LineChart from './LineChart'
 import { get_result } from '@/lib/api'
+import {BiFilterAlt} from 'react-icons/bi'
 
 const SavedSurvey = ({ data, removeSurvey, updateSurvey, setIsLoading }) => {
     const [modalOptions, setModalOptions] = useState(null)
@@ -39,7 +40,12 @@ const SavedSurvey = ({ data, removeSurvey, updateSurvey, setIsLoading }) => {
     const handle_search = () => {
         router.push({
             pathname: '/dashboard',
-            query: { q: data.text }
+            query:{ 
+                q: data.text,
+                price:data?.price_range_favorite,
+                rating:data?.rating_favorite,
+                shipping:data?.free_shipping_favorite
+            }
         })
     }
 
@@ -105,7 +111,27 @@ const SavedSurvey = ({ data, removeSurvey, updateSurvey, setIsLoading }) => {
                 </div>
                 <div className={styles.row}>
                     <BsFillCalendarWeekFill color="#a7287f" size={20} />
-                    {data.created_at}
+                    {new Date(data.created_at).toLocaleDateString('it-IT')}
+                </div>
+                <div className={styles.row}>
+                    <BiFilterAlt color="#a7287f" size={20} />
+                    <div className={styles.filters}>
+                        {
+                           data?.price_range_favorite &&  <div>{data?.price_range_favorite} €</div>
+                        }
+                        {
+                            data?.free_shipping_favorite==1 && <div style={{color:'green'}}>Spedizione gratuita</div>
+                        }
+                        <div>
+                           {
+                            data?.rating_favorite && [...Array(Math.floor(data?.rating_favorite)).keys()].map((_,index) => <i className='fa fa-star' />)
+                            }
+                            {
+                            data?.rating_favorite && [...Array(Math.ceil(data?.rating_favorite - Math.floor(data?.rating_favorite))).keys()].map((_index) => <i className='fa fa-star-half-o' />)
+                            } 
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
             <div className={styles.content_options}>
@@ -147,6 +173,8 @@ const SavedSurvey = ({ data, removeSurvey, updateSurvey, setIsLoading }) => {
                         onClick={handleShowModalConfirm}>
                         <BsTrash size={25} />
                     </button>
+
+                    
                 </div>
             </div>
         </div>

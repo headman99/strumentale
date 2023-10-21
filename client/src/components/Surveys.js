@@ -17,7 +17,7 @@ function Surveys() {
             // Cancel the scheduling
             // TODO: This should be done by making a request to the API
             const survey = surveys.find(survey => survey.id == id);
-            schedule.cancelJob(survey.title)
+            //schedule.cancelJob(survey.title)
         } catch (err) {
             console.log(err)
         }
@@ -42,6 +42,7 @@ function Surveys() {
     useEffect(() => {
         get_survey()
             .then(response => {
+                console.log(response)
                 setSurveys(response.data)
                 setIsLoading(false)
             })

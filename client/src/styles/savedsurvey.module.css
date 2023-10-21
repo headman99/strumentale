@@ -51,3 +51,10 @@
     padding: 10px;
 }
 
+.filters{
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+    flex: 1;
+}
+

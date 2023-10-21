@@ -13,8 +13,7 @@ import React from 'react'
 import Loading from '@/components/Loading'
 import ApplicationLogo from '@/components/ApplicationLogo'
 
-
-const Login = ({redirectPath}) => {
+const Login = ({ redirectPath }) => {
     const router = useRouter()
 
     const { login } = useAuth({
@@ -46,40 +45,45 @@ const Login = ({redirectPath}) => {
             remember: shouldRemember,
             setErrors,
             setStatus
-        }).then(() => {
-            setIsLoading(false)
-            router.push(`/${redirectPath?redirectPath:'dashboard'}`)
         })
+            .then(res => {
+                if (res.status) {
+                    router.push(`/${redirectPath ? redirectPath : 'dashboard'}`)
+                } else {
+                    setIsLoading(false)
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
     return (
         <GuestLayout>
-            <Loading absolute={true} isLoading={isLoading}/>
-            <div className='background-color'>
-                <div
-                    className="relative flex items-top justify-center  sm:items-center sm:pt-0">
-                    <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block " >
+            <Loading absolute={true} isLoading={isLoading} />
+            <div className="background-color">
+                <div className="relative flex items-top justify-center  sm:items-center sm:pt-0">
+                    <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block ">
                         <Link
                             href="/register"
-                            style={{color:'white'}}
+                            style={{ color: 'white' }}
                             className="ml-4 text-sm  underline">
                             Registrazione
                         </Link>
                         <Link
                             href="/dashboard"
-                            style={{color:'white'}}
+                            style={{ color: 'white' }}
                             className="ml-4 text-sm  underline">
                             Dashboard
                         </Link>
                     </div>
                 </div>
                 <AuthCard
-                logo={
-                <Link href="https://strumentale.it">
-                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                </Link>
-            }
-                >
+                    logo={
+                        <Link href="https://strumentale.it">
+                            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+                        </Link>
+                    }>
                     {/* Session Status */}
                     <AuthSessionStatus className="mb-4" status={status} />
 
@@ -99,7 +103,7 @@ const Login = ({redirectPath}) => {
                             />
 
                             <InputError
-                                messages={errors.email}
+                                messages={errors}
                                 className="mt-2"
                             />
                         </div>
@@ -154,7 +158,9 @@ const Login = ({redirectPath}) => {
                             Forgot your password?
                             </Link>*/}
 
-                            <button className="ml-3 btn-search border-radius" >Login</button>
+                            <button className="ml-3 btn-search border-radius">
+                                Login
+                            </button>
                         </div>
                     </form>
                 </AuthCard>
