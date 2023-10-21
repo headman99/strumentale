@@ -70,15 +70,14 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 throw 'Sei loggato con un altro utente'
 
             const response = await axios.post('/login', props)
-            if(!response.data.status)
-                throw "Credenziali errate"
+            if (!response.data.status) throw 'Credenziali errate'
             const accesstoken = response.data.token
             token.current = accesstoken
             secureLocalStorage.setItem('token', token.current)
             axios.defaults.headers.common['Authorization'] =
                 'Bearer ' + accesstoken
             mutate()
-            return {status:true}
+            return { status: true }
         } catch (error) {
             // Handle errors
             if (error.response && error.response.status === 422) {
@@ -88,7 +87,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
                 // Handle other errors
                 console.error(error)
             }
-            return {status:false}
+            return { status: false }
         }
     }
 

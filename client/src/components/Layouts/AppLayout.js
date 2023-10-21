@@ -6,9 +6,7 @@ const AppLayout = ({ header, children }) => {
     const { user } = useAuth({ middleware: 'auth' })
 
     return (
-        <div
-            style={{ backgroundColor: '#3a1f78' }}
-            className="min-h-screen ">
+        <div style={{ backgroundColor: '#3a1f78' }} className="min-h-screen ">
             <Navigation user={user} />
             {/* Page Heading */}
             {header && (

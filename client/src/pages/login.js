@@ -102,10 +102,7 @@ const Login = ({ redirectPath }) => {
                                 autoFocus
                             />
 
-                            <InputError
-                                messages={errors}
-                                className="mt-2"
-                            />
+                            <InputError messages={errors} className="mt-2" />
                         </div>
 
                         {/* Password */}

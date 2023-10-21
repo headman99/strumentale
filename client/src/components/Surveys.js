@@ -2,8 +2,8 @@ import axios from '@/lib/axios'
 import React, { useEffect, useState } from 'react'
 import SavedSurvey from './SavedSurvey'
 import { get_survey, delete_survey, update_survey } from '@/lib/api'
-import Loading from './Loading';
-import schedule from 'node-schedule';
+import Loading from './Loading'
+import schedule from 'node-schedule'
 
 function Surveys() {
     const [surveys, setSurveys] = useState(null)
@@ -16,7 +16,7 @@ function Surveys() {
 
             // Cancel the scheduling
             // TODO: This should be done by making a request to the API
-            const survey = surveys.find(survey => survey.id == id);
+            const survey = surveys.find(survey => survey.id == id)
             //schedule.cancelJob(survey.title)
         } catch (err) {
             console.log(err)
@@ -63,18 +63,22 @@ function Surveys() {
                     alignItems: 'center',
                     paddingTop: 50
                 }}>
-                {(surveys && surveys.length >0) && surveys?.map(survey => (
-                    <SavedSurvey
-                        data={survey}
-                        removeSurvey={removeSurvey}
-                        key={survey.id}
-                        updateSurvey={updateSurvey}
-                        setIsLoading={setIsLoading}
-                    />
-                ))}
-                {
-                    (surveys && surveys.length==0) && <div className='no-data'>Non ci sono ricerche salvate al momento </div>
-                }
+                {surveys &&
+                    surveys.length > 0 &&
+                    surveys?.map(survey => (
+                        <SavedSurvey
+                            data={survey}
+                            removeSurvey={removeSurvey}
+                            key={survey.id}
+                            updateSurvey={updateSurvey}
+                            setIsLoading={setIsLoading}
+                        />
+                    ))}
+                {surveys && surveys.length == 0 && (
+                    <div className="no-data">
+                        Non ci sono ricerche salvate al momento{' '}
+                    </div>
+                )}
             </div>
         </>
     )

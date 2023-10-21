@@ -7,7 +7,12 @@ import Loading from './Loading'
  * Component in charge of displaying the results list
  */
 function Results(props) {
-    if (props.error) return <div className='no-data'>Caricamento fallito, ricaricare al pagina</div>
+    if (props.error)
+        return (
+            <div className="no-data">
+                Caricamento fallito, ricaricare al pagina
+            </div>
+        )
     if (!props.data) return <div />
 
     const item_list = props.data.item_list
@@ -54,7 +59,7 @@ function Results(props) {
                                 price: item.price,
                                 img: item.img,
                                 url: item.url,
-                                siteName:item.siteName
+                                siteName: item.siteName
                             }}
                             handleSaveItem={handleSaveItem}
                         />

@@ -128,7 +128,9 @@ const Register = () => {
                             Already registered?
                         </Link>
 
-                        <button className="ml-4 btn-search border-radius">Register</button>
+                        <button className="ml-4 btn-search border-radius">
+                            Register
+                        </button>
                     </div>
                 </form>
             </AuthCard>

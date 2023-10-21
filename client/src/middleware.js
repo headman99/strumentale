@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 export default function middleware(req) {
-    const baseURL =  req.nextUrl['origin']
+    const baseURL = req.nextUrl['origin']
     let verify = req.cookies.get('loggedin')
     //console.log(req)
     let url = req.url

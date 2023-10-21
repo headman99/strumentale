@@ -14,16 +14,17 @@ const CompareTable = ({ data }) => {
                 {
                     <div className="table-body">
                         {chunk.map(site => {
-                            console.log("site = " , site)
+                            console.log('site = ', site)
                             const result = data.filter(
                                 el => el?.siteName === site.siteName
                             )[0]
                             return (
                                 <div className="table-cell" key={site}>
                                     <a
-                                        target='_blank'
+                                        target="_blank"
                                         className="cell-image"
-                                        href={result?.url}>
+                                        href={result?.url}
+                                        rel="noreferrer">
                                         <img
                                             src={`images/${site.logo}`}
                                             alt={site.siteName}

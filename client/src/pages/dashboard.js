@@ -1,6 +1,6 @@
 import AppLayout from '@/components/Layouts/AppLayout'
 import Head from 'next/head'
-import { useRef, useState,useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import useSWR from 'swr'
 import dynamic from 'next/dynamic'
 import TransitionAlerts from '@/components/TransitionAlerts'
@@ -15,12 +15,11 @@ const DashBar = dynamic(() => import('@/components/DashBar'), { ssr: false })
 
 const Dashboard = () => {
     const [data, setData] = useState({ item_list: [] })
-    
+
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false) // Wether the data is loadingù
     const [transitionAlertOptions, setTransitionAlertOptions] = useState(null)
     const abortController = useRef(null)
-
 
     /**
      * Fetcher of the application
@@ -45,9 +44,8 @@ const Dashboard = () => {
             abortController.current = controller
             const res = await axiosInstance_node.get(urlQuery)
             setData(res.data)
-            console.log('dati=' , res.data)
-            if(res.data)
-                secureLocalStorage.setItem("data",res.data);
+            console.log('dati=', res.data)
+            if (res.data) secureLocalStorage.setItem('data', res.data)
             setError(null)
         } catch (err) {
             setError(err)
@@ -81,26 +79,23 @@ const Dashboard = () => {
         refreshWhenOffline: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false
-    })   
+    })
 
     //Decide wheter to display data present in localstorage
     useEffect(() => {
-        const secure_data = secureLocalStorage.getItem("data")
+        const secure_data = secureLocalStorage.getItem('data')
         console.log(secure_data)
-        if(secure_data)
-            setData(secure_data)
-    },[])
+        if (secure_data) setData(secure_data)
+    }, [])
 
     return (
-        <AppLayout
-        >
-            <div className='background-color'>
-                <div
-                    className="relative flex items-top justify-center  sm:items-center sm:pt-0">
-                    <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block " >
+        <AppLayout>
+            <div className="background-color">
+                <div className="relative flex items-top justify-center  sm:items-center sm:pt-0">
+                    <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block ">
                         <Link
                             href="/login"
-                            style={{color:'white'}}
+                            style={{ color: 'white' }}
                             className="ml-4 text-sm  underline">
                             Login
                         </Link>

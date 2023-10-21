@@ -15,10 +15,8 @@ const Items = () => {
     useEffect(() => {
         get_item()
             .then(items => {
-                if(items?.data)
-                    setData(items.data)
-                else
-                    setData([])
+                if (items?.data) setData(items.data)
+                else setData([])
             })
             .catch(err => {
                 console.log(err)
@@ -49,17 +47,21 @@ const Items = () => {
             <MyModal options={modalOptions} />
             <Loading absolute={true} isLoading={!data} />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                { (data && data?.length > 0) && data?.map(item => (
-                    <Item
-                        key={item.url}
-                        data={item}
-                        saved={true}
-                        handleUnsaveItem={handleUnsaveItem}
-                    />
-                ))}
-                {
-                    (data&& data.length==0) && <div className='no-data'>Non ci sono oggetti salvati al momento</div>
-                }
+                {data &&
+                    data?.length > 0 &&
+                    data?.map(item => (
+                        <Item
+                            key={item.url}
+                            data={item}
+                            saved={true}
+                            handleUnsaveItem={handleUnsaveItem}
+                        />
+                    ))}
+                {data && data.length == 0 && (
+                    <div className="no-data">
+                        Non ci sono oggetti salvati al momento
+                    </div>
+                )}
             </div>
         </AppLayout>
     )

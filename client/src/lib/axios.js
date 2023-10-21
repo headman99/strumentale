@@ -23,7 +23,7 @@ let axios = Axios.create({
 
 export let axiosInstance_node = Axios.create({
     baseURL: NODE_BACKEND,
-    headers:headers
+    headers: headers
 })
 
 axios.interceptors.request.use(function (config) {
