@@ -66,10 +66,10 @@ const Item = ({ data, saved, handleSaveItem, handleUnsaveItem }) => {
                                 <div className="ratings mr-3">
 
                                     {
-                                        rate && [...Array(Math.floor(rate)).keys()].map((_,index) => <i className='fa fa-star' />)
+                                        rate && [...Array(Math.floor(rate)).keys()].map((_,index) => <i key = {index} className='fa fa-star' />)
                                     }
                                     {
-                                        rate && [...Array(Math.ceil(rate - Math.floor(rate))).keys()].map((_index) => <i className='fa fa-star-half-o' />)
+                                        rate && [...Array(Math.ceil(rate - Math.floor(rate))).keys()].map((_,index) => <i key = {index} className='fa fa-star-half-o' />)
                                     }
                                 </div>
                                 <span>{rate}</span>
