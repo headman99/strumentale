@@ -17,8 +17,10 @@ const GENERAL_FILTERS = {
 };
 
 async function scrapingFunction(instrument, filters,timeout) {
+
+  /*OLD VERSION: 1 TAB FOR EACH PAGE IN THE SAME BROWSER*/
   // Create an instance of the browser
-  const browser = await pt.launch({
+  /*const browser = await pt.launch({
     headless: "new",
     defaultViewport: null,
     args: ["--no-sandbox"],
@@ -27,7 +29,35 @@ async function scrapingFunction(instrument, filters,timeout) {
   // Array of promises
   const scrapePromises = pages.map(
     async (page) => await scrapePage(browser, instrument, page, timeout)
-  );
+  );*/
+
+  /*NEW VERSION:SPLITTED VERSION -> 3 BROWSER INSTANCES WITH 4 TABS EACH*/
+  //Splitting function to split the pages array in groups of 4.
+  function splitArrayIntoGroups(arr, groupSize) {
+    return arr.reduce((result, element, index) => {
+      if (index % groupSize === 0) {
+        result.push(arr.slice(index, index + groupSize));
+      }
+      return result;
+    }, []);
+  }
+  const scrapePromises = [];
+
+  const groupOfPages = splitArrayIntoGroups(pages, 4);
+
+  groupOfPages.forEach(async (group) => {
+    // Create an instance of the browser
+    const browser = await pt.launch({
+      headless: "new",
+      defaultViewport: null,
+      args: ["--no-sandbox"],
+    });
+
+    const promises_group = group.map(
+      async (page) => await scrapePage(browser, instrument, page, timeout)
+    );
+    groupOfPages.push(promises_group);
+  });
 
   // Return the promise of resolving all the promises
   return new Promise((resolve, reject) => {
