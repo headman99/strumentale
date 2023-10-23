@@ -13,6 +13,7 @@ const CRONEX = "*/30 * * * * *"; // Every 30''
 
 /*Basic function to trigger the scraper based on filters*/
 router.get("/scrape_pages", async (req, res) => {
+  process.setMaxListeners(15);
   const instrument = req.query.instrument;
   const filters = req.query?.filters?req.query?.filters:null;
   const first = req.query?.first;
