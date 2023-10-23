@@ -44,7 +44,6 @@ const Dashboard = () => {
             abortController.current = controller
             const res = await axiosInstance_node.get(urlQuery)
             setData(res.data)
-            console.log('dati=', res.data)
             if (res.data) secureLocalStorage.setItem('data', res.data)
             setError(null)
         } catch (err) {

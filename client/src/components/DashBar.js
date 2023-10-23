@@ -52,7 +52,6 @@ const DashBar = ({
     useEffect(() => {
         // Check if there is query (means we came from /searches)
         if (router.query.q) {
-            console.log(router.query)
             const { price, shipping, rating, q } = router.query
 
             setSearchParam(q)
@@ -75,7 +74,6 @@ const DashBar = ({
     const handleSave = () => {
         if (!searchParam) return null
         const filters = buildFilters()
-        console.log(filters)
         // Request format to take the data from the DB
         let request = {
             title: `${searchParam}`,

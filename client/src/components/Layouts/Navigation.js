@@ -18,15 +18,19 @@ const Navigation = ({ user }) => {
     const [open, setOpen] = useState(false)
 
     return (
-        <div style={{ padding: 20, paddingLeft: '20%', paddingRight: '20%' }}>
-            <div
-                style={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    paddingBottom: 20
-                }}>
-                <ApplicationLogo width={'20em'} />
+        <div style={{  paddingLeft: '20%', paddingRight: '20%' }}>
+            <div style={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+                <div
+                    style={{
+                        width: 350,
+                        height: 200,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        paddingBottom: 20,
+                        overflow: 'hidden'
+                    }}>
+                    <ApplicationLogo  />
+                </div>
             </div>
 
             <nav
