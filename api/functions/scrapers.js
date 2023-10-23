@@ -58,8 +58,8 @@ async function scrapingFunction(instrument, filters,timeout) {
       async (page) => await scrapePage(browser, instrument, page, timeout)
     );
 
-    await Promise.all(promises);
-    
+    await Promise.all(promises_group);
+
     await browser.close()
     groupOfPages.push(promises_group);
   });
