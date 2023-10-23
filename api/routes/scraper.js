@@ -90,11 +90,15 @@ router.get("/try_scrape", async (req,res) => {
     args: ["--no-sandbox"],
   });
   
-  const driver = await browser.newPage();
-  await driver.setViewport({ width: 1000, height: 500 });
-  await driver.goto("https://google.com", {waitUntil:'load'})
-  const title = await driver.title();
-  res.status(200).json(title);
+  const driver1 = await browser.newPage();
+  const driver2 = await browser.newPage();
+  await driver1.setViewport({ width: 1000, height: 500 });
+  await driver2.setViewport({ width: 1000, height: 500 });
+  await driver1.goto("https://google.com", {waitUntil:'load'})
+  await driver2.goto("https://amazon.com", {waitUntil:'load'})
+  const title1 = await driver1.title();
+  const title2 = await driver2.title();
+  res.status(200).json([title1,title2]);
 });
 
 
