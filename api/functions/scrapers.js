@@ -110,6 +110,7 @@ async function scrapePage(browser, instrument, page,timeout) {
   if(timeout)
     driver.setDefaultNavigationTimeout(timeout*1000);
   try {
+    //await driver.setCacheEnabled(false);
     await driver.setViewport({ width: 1000, height: 500 });
     await driver.goto(page["url"], {waitUntil:'load'}); // Navigate to the page
     const data = await scrapeContent(driver, instrument, page);
