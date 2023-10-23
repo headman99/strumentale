@@ -47,6 +47,7 @@ async function scrapingFunction(instrument, filters,timeout) {
 
   groupOfPages.forEach(async (group) => {
     // Create an instance of the browser
+    
     const browser = await pt.launch({
       headless: "new",
       defaultViewport: null,
@@ -56,6 +57,9 @@ async function scrapingFunction(instrument, filters,timeout) {
     const promises_group = group.map(
       async (page) => await scrapePage(browser, instrument, page, timeout)
     );
+
+    await Promise.all(promises);
+    
     await browser.close()
     groupOfPages.push(promises_group);
   });
