@@ -22,7 +22,7 @@ async function scrapingFunction(instrument, filters,timeout) {
     headless: "new",
     defaultViewport: null,
     timeout:0,
-    args: ["--no-sandbox"],
+    args: ["--no-sandbox",'--disable-setuid-sandbox'],
   });
 
 
