@@ -56,6 +56,7 @@ async function scrapingFunction(instrument, filters,timeout) {
     const promises_group = group.map(
       async (page) => await scrapePage(browser, instrument, page, timeout)
     );
+    await browser.close()
     groupOfPages.push(promises_group);
   });
 
@@ -97,7 +98,8 @@ async function scrapingFunction(instrument, filters,timeout) {
         reject(error);
       })
       .finally(async () => {
-        browser.close();
+        //ENABLE IN THE OLD VERSION
+        //browser.close();
       });
   });
 }
