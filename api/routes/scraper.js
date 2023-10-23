@@ -85,7 +85,7 @@ router.get("/save_scrape_result", async (req, res) => {
 
 router.get("/try_scrape", async (req,res) => {
   const browser = await pt.launch({
-    headless: "false",
+    headless: "true",
     defaultViewport: null,
     args: ["--no-sandbox"],
   });
