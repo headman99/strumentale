@@ -91,7 +91,7 @@ router.get("/try_scrape", async (req,res) => {
   
   const driver = await browser.newPage();
   await driver.setViewport({ width: 1000, height: 500 });
-  await driver.goto(page["url"], {waitUntil:'load'})
+  await driver.goto("https://google.com", {waitUntil:'load'})
   const title = await driver.title();
   res.status(200).json(title);
 });
