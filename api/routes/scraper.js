@@ -1,46 +1,23 @@
 const router = require("express").Router();
 const pt = require("puppeteer");
 
-/* They'll be nedeed when scheduleCrawler and /cancelCrawler are activated*/
+/* They'll be nedeed when scheduleCrawler and /cancelCrawler are activated*/ 
 const { scrapingFunction } = require("../functions/scrapers");
 const { axiosInstance } = require("../functions/axios");
-const pages = require("../functions/pages");
 //const nodeCron = require("node-cron")
 //const schedule = require("node-schedule"); replaced with node-cron
 
+
 const CRONEX = "*/30 * * * * *"; // Every 30''
+
 
 /*Basic function to trigger the scraper based on filters*/
 router.get("/scrape_pages", async (req, res) => {
-  process.setMaxListeners(15);
   const instrument = req.query.instrument;
-  const filters = req.query?.filters ? req.query?.filters : null;
+  const filters = req.query?.filters?req.query?.filters:null;
   const first = req.query?.first;
-  /*NEW VERSION*/
-  //Split the requests in 3 concurrent browsers with 3 tabs each
-  function splitArrayIntoGroups(arr, groupSize) {
-    return arr.reduce((result, element, index) => {
-      if (index % groupSize === 0) {
-        result.push(arr.slice(index, index + groupSize));
-      }
-      return result;
-    }, []);
-  }
 
-  const response = [];
-  const groupOfPages = splitArrayIntoGroups(pages, 4);
-  await Promise.all(groupOfPages.map(async (pages_) => {
-    try {
-      const data = await scrapingFunction(instrument, filters, 30, pages_);
-      response.push(...data.item_list);
-    } catch (error) {
-      console.log(error);
-    }
-  }));
-  res.status(200).json(response);
-
-  /*OLD VERSION-> scrape on all tha pages: 12 tabs 1 browser*/
-  /*
+  // TODO: Make the function return only the data and send a response from here
   scrapingFunction(instrument, filters)
     .then((data) => {
       const response = first ? data.item_list[0] : data;
@@ -48,12 +25,12 @@ router.get("/scrape_pages", async (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-    });*/
+    });
 });
 
-router.get("/", async (req, res) => {
-  res.status(200).json({ message: "The scraper server is working normally" });
-});
+router.get("/",async (req,res)=>{
+  res.status(200).json({message:'The scraper server is working normally'});
+})
 
 /* API TO TEST THAT PARALLEL CRAWLERS ARE EXECUTED CORRECTLY. YOU CAN TRY IT ON POSTMAN*/
 /*It sends a request to the PHP api to get the surveys, then it executes parallel instances of the crawler and return the result to the php backend*/
@@ -95,7 +72,7 @@ router.get("/save_scrape_result", async (req, res) => {
       .then(() => {
         console.log("All tasks are done");
         console.log("Results:", results);
-        res.status(200).json(results);
+        res.status(200).json(results)
       })
       .catch((error) => {
         console.error("An error occurred:", error);
@@ -105,23 +82,20 @@ router.get("/save_scrape_result", async (req, res) => {
   }
 });
 
-router.get("/try_scrape", async (req, res) => {
+router.get("/try_scrape", async (req,res) => {
   const browser = await pt.launch({
     headless: "new",
     defaultViewport: null,
     args: ["--no-sandbox"],
   });
-
-  const driver1 = await browser.newPage();
-  const driver2 = await browser.newPage();
-  await driver1.setViewport({ width: 1000, height: 500 });
-  await driver2.setViewport({ width: 1000, height: 500 });
-  await driver1.goto("https://google.com", { waitUntil: "load" });
-  await driver2.goto("https://amazon.com", { waitUntil: "load" });
-  const title1 = await driver1.title();
-  const title2 = await driver2.title();
-  res.status(200).json([title1, title2]);
+  
+  const driver = await browser.newPage();
+  await driver.setViewport({ width: 1000, height: 500 });
+  await driver.goto("https://google.com", {waitUntil:'load'})
+  const title = await driver.title();
+  res.status(200).json(title);
 });
+
 
 /** SCHEDULE CRAWLER API FUNCTIONS**/
 /** They are disabled by default. They allow the user to automatically schedule a survey crawler based on the CRONEX string or diable it.**/

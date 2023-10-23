@@ -8,7 +8,7 @@ const {
 } = require("./filters");
 
 const ITEMS_PER_SITE = 5;
-const ELEMENT_LOAD_TIMEOUT = 8000; // miliseconds
+const ELEMENT_LOAD_TIMEOUT = 10000; // miliseconds
 
 const GENERAL_FILTERS = {
   price: generalPriceFilter,
@@ -16,7 +16,7 @@ const GENERAL_FILTERS = {
   shipment: generalShippingFilter,
 };
 
-async function scrapingFunction(instrument, filters,timeout,pages_) {
+async function scrapingFunction(instrument, filters,timeout) {
   // Create an instance of the browser
   const browser = await pt.launch({
     headless: "new",
@@ -24,16 +24,44 @@ async function scrapingFunction(instrument, filters,timeout,pages_) {
     args: ["--no-sandbox"],
   });
 
-  // Array of promises
-  const scrapePromises = pages_.map(
+
+  function splitArrayIntoGroups(arr, groupSize) {
+    return arr.reduce((result, element, index) => {
+      if (index % groupSize === 0) {
+        result.push(arr.slice(index, index + groupSize));
+      }
+      return result;
+    }, []);
+  }
+
+  const groupOfPages = splitArrayIntoGroups(pages, 4);
+  
+  async function processGroup(pages) {
+    const scrapePromises = pages.map(async (page) => await scrapePage(browser, instrument, page, timeout));
+    return Promise.all(scrapePromises);
+  }
+  const allGroupPromises = [];
+  
+  for (const group of groupOfPages) {
+    const groupPromise = await processGroup(group)
+    allGroupPromises.push(...groupPromise);
+  }
+
+
+
+/*
+  const scrapePromises = pages.map(
     async (page) => await scrapePage(browser, instrument, page, timeout)
   );
-
+*/
   // Return the promise of resolving all the promises
   return new Promise((resolve, reject) => {
-    Promise.all(scrapePromises)
+    Promise.all(
+      //scrapePromises
+      allGroupPromises
+      )
       .then((promisesData) => {
-       
+       console.log("prmisesData=", promisesData)
         let data = { item_list: [] };
 
         // Merge the data from each promise
