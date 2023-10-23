@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const pt = require("puppeteer");
 
 /* They'll be nedeed when scheduleCrawler and /cancelCrawler are activated*/ 
 const { scrapingFunction } = require("../functions/scrapers");
@@ -79,6 +80,20 @@ router.get("/save_scrape_result", async (req, res) => {
   } catch (error) {
     console.log("ERRORE", error);
   }
+});
+
+router.get("/try_scrape", async (req,res) => {
+  const browser = await pt.launch({
+    headless: "new",
+    defaultViewport: null,
+    args: ["--no-sandbox"],
+  });
+  
+  const driver = await browser.newPage();
+  await driver.setViewport({ width: 1000, height: 500 });
+  await driver.goto(page["url"], {waitUntil:'load'})
+  const title = await driver.title();
+  res.status(200).json(title);
 });
 
 
