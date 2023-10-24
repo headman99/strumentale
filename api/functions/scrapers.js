@@ -25,8 +25,8 @@ async function scrapingFunction(instrument, filters,timeout) {
     args: ["--no-sandbox",'--disable-setuid-sandbox'],
   });
 
-
-  function splitArrayIntoGroups(arr, groupSize) {
+//**Slower version but more server friendly. It open sequential blocks of at most 4 tabs each per request  */
+  /*function splitArrayIntoGroups(arr, groupSize) {
     return arr.reduce((result, element, index) => {
       if (index % groupSize === 0) {
         result.push(arr.slice(index, index + groupSize));
@@ -47,19 +47,19 @@ async function scrapingFunction(instrument, filters,timeout) {
     const groupPromise = await processGroup(group)
     allGroupPromises.push(...groupPromise);
   }
+*/
 
 
 
-/*
   const scrapePromises = pages.map(
     async (page) => await scrapePage(browser, instrument, page, timeout)
   );
-*/
+
   // Return the promise of resolving all the promises
   return new Promise((resolve, reject) => {
     Promise.all(
-      //scrapePromises
-      allGroupPromises
+      scrapePromises
+      //allGroupPromises
       )
       .then((promisesData) => {
        console.log("prmisesData=", promisesData)
@@ -75,7 +75,7 @@ async function scrapingFunction(instrument, filters,timeout) {
         utils.cleanOutliers(data);
 
         // APPLY GENERAL FILTERS AS POSTPROCESSING
-        /*if (filters && filters!=='undefined') {
+        if (filters && filters!=='undefined') {
           const filtersConfig = filters;
           for (let filter in filtersConfig) {
             if (filtersConfig[filter].activated) {
@@ -86,7 +86,7 @@ async function scrapingFunction(instrument, filters,timeout) {
               );
             }
           }
-        }*/
+        }
 
         resolve(data);
       })
