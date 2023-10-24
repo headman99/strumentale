@@ -8,7 +8,7 @@ const {
 } = require("./filters");
 
 const ITEMS_PER_SITE = 5;
-const ELEMENT_LOAD_TIMEOUT = 10000; // miliseconds
+const ELEMENT_LOAD_TIMEOUT = 8000; // miliseconds
 
 const GENERAL_FILTERS = {
   price: generalPriceFilter,
