@@ -217,7 +217,7 @@ const pages = [
             productContent: 'article',
             image: 'img',
             name: 'h3',
-            url: '.rc--lazyload',
+            url: 'h3:nth-child(1) > a:nth-child(1)',
             price: '.discounted-price',
             discountedPrice: '.standard-price'
         }
