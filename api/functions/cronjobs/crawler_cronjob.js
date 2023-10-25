@@ -43,7 +43,7 @@ nodeCron.schedule(
       console.log("------EXECUTION OF CRONJOB SCRAPER--------");
       const survs = await axiosInstance.get("/node/get_surveys");
 
-      const concurrencyLimit = 3;
+      const concurrencyLimit = 2;
 
       // Split the array of parameters into batches of size 'concurrencyLimit'
       const parameterBatches = [];

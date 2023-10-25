@@ -32,12 +32,6 @@ router.get("/",async (req,res)=>{
   res.status(200).json({message:'The scraper server is working normally'});
 })
 
-router.get("/get_surveys",async (req,res) =>{
-  axiosInstance.get("https://be.strumentale.it/node/get_surveys").then(r => {
-    res.status(200).json(r)
-  })
-})
-
 /* API TO TEST THAT PARALLEL CRAWLERS ARE EXECUTED CORRECTLY. YOU CAN TRY IT ON POSTMAN*/
 /*It sends a request to the PHP api to get the surveys, then it executes parallel instances of the crawler and return the result to the php backend*/
 
