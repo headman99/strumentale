@@ -10,19 +10,22 @@ function Results(props) {
     if (props.error)
         return (
             <div className="no-data">
-                Caricamento fallito, ricaricare al pagina
+                Caricamento fallito, ricaricare al pagina. L'elemento che cerchi
+                potrebbe non essere stato trovato.
             </div>
         )
     if (!props.data) return <div />
 
     const item_list = props.data.item_list
     const handleSaveItem = data => {
-        const { name, url, img } = data
-
+        const { name, url, img, description, siteName } = data
+        console.log(description)
         save_item({
             name: name,
             url: url,
-            img: img
+            img: img,
+            description:description,
+            siteName:siteName   
         })
             .then(() => {
                 props.transition_alert({
@@ -32,12 +35,17 @@ function Results(props) {
                 })
             })
             .catch(err => {
+                let text = "Errore nel salvataggio dell'elemento. "
+                let message = ''
+                if (err.response?.data?.exception)
+                    message = err.response.data.exception
+                else if (err.response.status == 401)
+                    message =
+                        'Per salvare un elemento devi prima autenticarti,vai alla pagina di login.'
                 props.transition_alert({
                     severity: 'warning',
                     title: 'Errore',
-                    text:
-                        "Errore nel salvataggio dell' elemento." +
-                        err?.response?.data?.exception
+                    text: `${text} ${message}`
                 })
             })
     }
@@ -48,9 +56,9 @@ function Results(props) {
             <Loading isLoading={props.isLoading} dataload={true} />
             {!props.isLoading && (
                 <div className="fade-in">
-                    {item_list.map((item, i) => (
+                    {item_list.map((item, index) => (
                         <Item
-                            key={i}
+                            key={index}
                             data={{
                                 name: item.name,
                                 description: item.description,

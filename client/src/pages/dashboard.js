@@ -7,6 +7,7 @@ import TransitionAlerts from '@/components/TransitionAlerts'
 import axios, { axiosInstance_node } from '../lib/axios'
 import Link from 'next/link'
 import secureLocalStorage from 'react-secure-storage'
+import { useAuth } from '@/hooks/auth'
 //import DashBar from '@/components/DashBar'
 
 //import DashBar from '@/components/DashBar';
@@ -20,6 +21,7 @@ const Dashboard = () => {
     const [isLoading, setIsLoading] = useState(false) // Wether the data is loadingù
     const [transitionAlertOptions, setTransitionAlertOptions] = useState(null)
     const abortController = useRef(null)
+    const { user, logout } = useAuth()
 
     /**
      * Fetcher of the application
@@ -77,7 +79,8 @@ const Dashboard = () => {
         dedupingInterval: Infinity, // Keep last version of data always in caché
         refreshWhenOffline: false,
         revalidateOnFocus: false,
-        revalidateOnReconnect: false
+        revalidateOnReconnect: false,
+        refreshInterval: 1 * 1000 * 60 //1 minuto
     })
 
     //Decide wheter to display data present in localstorage
@@ -89,16 +92,29 @@ const Dashboard = () => {
 
     return (
         <AppLayout>
+            <Link
+                href="/login"
+                style={{
+                    color: 'white',
+                    position: 'absolute',
+                    right: 0,
+                    top: 0,
+                    margin: 30,
+                    zIndex: 5
+                }}
+                onClick={e => {
+                    if (user) {
+                        e.preventDefault()
+                        logout()
+                    }
+                }}
+                className="ml-4 text-sm  underline">
+                {!user ? 'Accedi' : 'Logout'}
+            </Link>
+
             <div className="background-color">
                 <div className="relative flex items-top justify-center  sm:items-center sm:pt-0">
-                    <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block ">
-                        <Link
-                            href="/login"
-                            style={{ color: 'white' }}
-                            className="ml-4 text-sm  underline">
-                            Login
-                        </Link>
-                    </div>
+                    <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block " />
                 </div>
             </div>
             <Head>

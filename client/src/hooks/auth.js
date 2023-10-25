@@ -151,7 +151,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             middleware === 'guest' &&
             !user &&
             //&& !tkn
-            window.location.pathname != '/register'
+            window.location.pathname != '/register' &&
+            window.location.pathname != '/login'
         )
             router.push('/login')
 

@@ -179,7 +179,7 @@ const SavedSurvey = ({ data, removeSurvey, updateSurvey, setIsLoading }) => {
                         type="button"
                         className="btn btn-outline whiteback "
                         style={{ ...button_filler, ...bottom, ...left }}
-                        title="Delete"
+                        title="Elimina"
                         onClick={handleShowTrend}>
                         <BsGraphUpArrow size={25} />
                     </button>
@@ -188,7 +188,7 @@ const SavedSurvey = ({ data, removeSurvey, updateSurvey, setIsLoading }) => {
                         type="button"
                         className="btn btn-outline whiteback"
                         style={{ ...button_filler, ...bottom, ...right }}
-                        title="Delete"
+                        title="Grafico"
                         onClick={handleShowModalConfirm}>
                         <BsTrash size={25} />
                     </button>

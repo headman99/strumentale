@@ -7,6 +7,22 @@ const shipmentRetrievers = require("./shipmentRetrievers")
 const pages = [
     {
         id: '001',
+        url: 'https://www.musicalbox.com',
+        siteName: 'musicalbox',
+        postProcess: postProcessors.changeFormat,
+        selectors: {
+            searchBar: '.ui-autocomplete-input',
+            productsList: '.df-results',
+            product: '.df-card',
+            productContent: '.df-card__main',
+            image: 'img',
+            name: '.df-card__title',
+            url: '.df-card__main',
+            price: '.df-card__price '
+        }
+    },
+    {
+        id: '002',
         url: 'https://www.strumentimusicali.net',
         siteName: 'strumentimusicali',
         rateRetriever: rateRetrievers.retrieveFigurativeRate,
@@ -28,7 +44,7 @@ const pages = [
         }
     },
     {
-        id: '002',
+        id: '003',
         url: 'https://www.gear4music.it/it',
         siteName: 'gear4music',
         postProcess: postProcessors.changeFormat,
@@ -46,7 +62,7 @@ const pages = [
         }
     },
     {
-        id: '003',
+        id: '004',
         url: 'https://www.thomann.de/it/index.html',
         siteName: 'thomann',
         rateRetriever: rateRetrievers.retrieveStartsFiller,
@@ -66,7 +82,7 @@ const pages = [
         }
     },
     {
-        id: '004',
+        id: '005',
         url: 'https://www.mercatinomusicale.com',
         siteName: 'mercatinomusicale',
         shipmentRetriever: shipmentRetrievers.mercatinomusicale,
@@ -85,7 +101,7 @@ const pages = [
         }
     },
     {
-        id: '005',
+        id: '006',
         url: 'https://reverb.com',
         siteName: 'reverb',
         shipmentRetriever: shipmentRetrievers.reverb,
@@ -102,7 +118,7 @@ const pages = [
         }
     },
     {
-        id: '006',
+        id: '007',
         url: 'https://www.ebay.it',
         siteName: 'ebay',
         rateRetriever: rateRetrievers.retrievePercentageRate,
@@ -121,7 +137,7 @@ const pages = [
         }
     },
     {
-        id: '007',
+        id: '008',
         url: 'https://www.bellusmusic.com',
         siteName: 'bellusmusic',
         postProcess: postProcessors.changeFormat,
@@ -136,22 +152,6 @@ const pages = [
                 'div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > a:nth-child(3) > span:nth-child(1)',
             url: '.product-name',
             price: '.product-price.price.selling'
-        }
-    },
-    {
-        id: '008',
-        url: 'https://www.musicalbox.com',
-        siteName: 'musicalbox',
-        postProcess: postProcessors.changeFormat,
-        selectors: {
-            searchBar: '.ui-autocomplete-input',
-            productsList: '.df-results',
-            product: '.df-card',
-            productContent: '.df-card__main',
-            image: 'img',
-            name: '.df-card__title',
-            url: '.df-card__main',
-            price: '.df-card__price '
         }
     },
     {
@@ -213,7 +213,7 @@ const pages = [
         selectors: {
             searchBar: '.search-input',
             productsList: '.products',
-            product: 'article',
+            product: '.product-miniature',
             productContent: 'article',
             image: 'img',
             name: 'h3',

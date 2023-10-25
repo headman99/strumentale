@@ -165,6 +165,7 @@ async function scrapeContent(driver, instrument, page) {
         await driver.waitForSelector(page.selectors.productContent, {
           timeout: ELEMENT_LOAD_TIMEOUT,
         });
+        
         await driver.evaluate((el) => {
           return el.scrollIntoView();
         }, item);

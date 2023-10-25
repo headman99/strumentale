@@ -38,16 +38,28 @@ const Register = () => {
 
     return (
         <GuestLayout>
+            <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block ">
+                <Link
+                    href="/login"
+                    style={{ color: 'white' }}
+                    className="ml-4 text-sm  underline">
+                    Accedi
+                </Link>
+                <Link
+                    href="/dashboard"
+                    style={{ color: 'white' }}
+                    className="ml-4 text-sm  underline">
+                    Dashboard
+                </Link>
+            </div>
             <AuthCard
                 logo={
-                    <Link href="/">
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                    </Link>
+                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                 }>
                 <form onSubmit={submitForm}>
                     {/* Name */}
                     <div>
-                        <Label htmlFor="name">Name</Label>
+                        <Label htmlFor="name">Nome</Label>
 
                         <Input
                             id="name"
@@ -101,7 +113,7 @@ const Register = () => {
                     {/* Confirm Password */}
                     <div className="mt-4">
                         <Label htmlFor="passwordConfirmation">
-                            Confirm Password
+                            Conferma password
                         </Label>
 
                         <Input
@@ -125,11 +137,11 @@ const Register = () => {
                         <Link
                             href="/login"
                             className="underline text-sm text-gray-600 hover:text-gray-900">
-                            Already registered?
+                            Già registrato?
                         </Link>
 
                         <button className="ml-4 btn-search border-radius">
-                            Register
+                            Registrati
                         </button>
                     </div>
                 </form>

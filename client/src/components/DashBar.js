@@ -11,7 +11,6 @@ import { FaBalanceScaleLeft } from 'react-icons/fa'
 import CompareTable from './CompareTable'
 import { HiViewList } from 'react-icons/hi'
 import { ToggleButton } from 'react-bootstrap'
-import schedule from 'node-schedule'
 
 const DashBar = ({
     fetchData,
@@ -31,7 +30,7 @@ const DashBar = ({
     const [rating, setRating] = useState('')
     const [freeShipping, setFreeShipping] = useState(false)
     const router = useRouter()
-
+    
     function buildFilters() {
         return {
             price: {

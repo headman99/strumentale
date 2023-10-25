@@ -66,13 +66,13 @@ const Login = ({ redirectPath }) => {
                     <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block ">
                         <Link
                             href="/register"
-                            style={{ color: 'white' }}
+                            style={{ color: 'white',zIndex:200 }}
                             className="ml-4 text-sm  underline">
                             Registrazione
                         </Link>
                         <Link
                             href="/dashboard"
-                            style={{ color: 'white' }}
+                            style={{ color: 'white', zIndex:200}}
                             className="ml-4 text-sm  underline">
                             Dashboard
                         </Link>
@@ -80,9 +80,7 @@ const Login = ({ redirectPath }) => {
                 </div>
                 <AuthCard
                     logo={
-                        <Link href="https://strumentale.it">
-                            <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                        </Link>
+                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
                     }>
                     {/* Session Status */}
                     <AuthSessionStatus className="mb-4" status={status} />
@@ -143,7 +141,7 @@ const Login = ({ redirectPath }) => {
                                 />
 
                                 <span className="ml-2 text-sm text-gray-600">
-                                    Remember me
+                                    Ricordati di me
                                 </span>
                             </label>
                         </div>
@@ -156,7 +154,7 @@ const Login = ({ redirectPath }) => {
                             </Link>*/}
 
                             <button className="ml-3 btn-search border-radius">
-                                Login
+                                Accedi
                             </button>
                         </div>
                     </form>

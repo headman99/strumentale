@@ -1,9 +1,8 @@
-import axios from '@/lib/axios'
 import React, { useEffect, useState } from 'react'
 import SavedSurvey from './SavedSurvey'
 import { get_survey, delete_survey, update_survey } from '@/lib/api'
 import Loading from './Loading'
-import schedule from 'node-schedule'
+
 
 function Surveys() {
     const [surveys, setSurveys] = useState(null)

@@ -3,4 +3,28 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    max-width: 21em;
+    overflow: hidden;
+}
+
+.applogo_container a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    overflow: hidden;
+}
+
+.logo{
+    transform: scale(1.5);
+    width: 95%;
+    object-fit: contain;
+}
+
+@media screen and (max-width: 640px) {
+    .applogo_container img {
+        transform: scale(1);
+        margin-top: 20px;
+    }
+
 }

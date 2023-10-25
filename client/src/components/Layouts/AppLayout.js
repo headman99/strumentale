@@ -1,13 +1,14 @@
 import Navigation from '@/components/Layouts/Navigation'
 import { useAuth } from '@/hooks/auth'
+import { useState } from 'react'
 import TransitionAlerts from '../TransitionAlerts'
 
 const AppLayout = ({ header, children }) => {
     const { user } = useAuth({ middleware: 'auth' })
-
     return (
         <div style={{ backgroundColor: '#3a1f78' }} className="min-h-screen ">
             <Navigation user={user} />
+            
             {/* Page Heading */}
             {header && (
                 <header className="bg-white shadow">
