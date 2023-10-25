@@ -61,7 +61,7 @@ const Item = ({ data, saved, handleSaveItem, handleUnsaveItem }) => {
                                             height: 'auto'
                                         }}
                                         className="img-fluid img-responsive rounded product-image"
-                                        src={!img.includes('data:') ? img : ''}
+                                        src={!img?.includes('data:') ? img : ''}
                                         alt={`Immagine non disponibile, collegarsi al sito.`}
                                         onError={e => {
                                             e.currentTarget.setAttribute(
