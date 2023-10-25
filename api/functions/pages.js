@@ -9,6 +9,7 @@ const pages = [
         id: '001',
         url: 'https://www.musicalbox.com',
         siteName: 'musicalbox',
+        headless:true,
         postProcess: postProcessors.changeFormat,
         selectors: {
             searchBar: '.ui-autocomplete-input',
@@ -25,6 +26,7 @@ const pages = [
         id: '002',
         url: 'https://www.strumentimusicali.net',
         siteName: 'strumentimusicali',
+        headless:true,
         rateRetriever: rateRetrievers.retrieveFigurativeRate,
         shipmentRetriever: shipmentRetrievers.strumentimusicali,
         postProcess: postProcessors.cleanPrice,
@@ -47,6 +49,7 @@ const pages = [
         id: '003',
         url: 'https://www.gear4music.it/it',
         siteName: 'gear4music',
+        headless:true,
         postProcess: postProcessors.changeFormat,
         selectors: {
             searchBar: '#srch-str',
@@ -65,6 +68,7 @@ const pages = [
         id: '004',
         url: 'https://www.thomann.de/it/index.html',
         siteName: 'thomann',
+        headless:true,
         rateRetriever: rateRetrievers.retrieveStartsFiller,
         postProcess: postProcessors.changeFormat,
         selectors: {
@@ -85,6 +89,7 @@ const pages = [
         id: '005',
         url: 'https://www.mercatinomusicale.com',
         siteName: 'mercatinomusicale',
+        headless:true,
         shipmentRetriever: shipmentRetrievers.mercatinomusicale,
         postProcess: postProcessors.changeFormat,
         selectors: {
@@ -104,6 +109,7 @@ const pages = [
         id: '006',
         url: 'https://www.bananamusic.it/',
         siteName: 'bananamusic',
+        headless:true,
         postProcess: postProcessors.changeFormat,
         selectors: {
             searchBar: '.ais-SearchBox-input',
@@ -120,6 +126,7 @@ const pages = [
         id: '007',
         url: 'https://www.ebay.it',
         siteName: 'ebay',
+        headless:true,
         rateRetriever: rateRetrievers.retrievePercentageRate,
         shipmentRetriever: shipmentRetrievers.ebay,
         postProcess: postProcessors.cleanRange,
@@ -138,6 +145,7 @@ const pages = [
     {
         id: '008',
         url: 'https://www.bellusmusic.com',
+        headless:false,
         siteName: 'bellusmusic',
         postProcess: postProcessors.changeFormat,
         selectors: {
@@ -157,6 +165,7 @@ const pages = [
         id: '009',
         url: 'https://piazzostrumenti.it',
         siteName: 'piazzostrumenti',
+        headless:true,
         shipmentRetriever: shipmentRetrievers.piazzostrumenti,
         postProcess: postProcessors.changeFormat,
         selectors: {
@@ -174,6 +183,7 @@ const pages = [
         id: '010',
         url: 'https://shop.scavino.it',
         siteName: 'scavino',
+        headless:true,
         postProcess: postProcessors.changeFormat,
         imageDatabaseUrl:'https://shop.scavino.it/',
         selectors: {
@@ -192,6 +202,7 @@ const pages = [
         id: '011',
         url: 'https://www.seicordeshop.it',
         siteName: 'seicordeshop',
+        headless:true,
         postProcess: postProcessors.changeFormat,
         selectors: {
             searchBar: '.ui-autocomplete-input',
@@ -208,6 +219,7 @@ const pages = [
         id: '012',
         url: 'https://www.440hz.it/en',
         siteName: '440hz',
+        headless:true,
         postProcess: postProcessors.cleanPrice,
         selectors: {
             searchBar: '.search-input',

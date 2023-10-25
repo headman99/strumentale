@@ -1,6 +1,9 @@
-const pt = require("puppeteer");
+const pt = require("puppeteer-extra");
 const pages = require("../functions/pages");
 const utils = require("../functions/utils");
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const AdblockerPlugin = require('puppeteer-extra-plugin-adblocker')
+
 const {
   generalPriceFilter,
   generalRateFilter,
@@ -17,14 +20,19 @@ const GENERAL_FILTERS = {
 };
 
 async function scrapingFunction(instrument, filters,timeout) {
+  pt.use(StealthPlugin())
+
+  pt.use(AdblockerPlugin({ blockTrackers: true }))
+
   // Create an instance of the browser
   const browser = await pt.launch({
-    headless: false,
+    headless: 'new',
     defaultViewport: null,
     timeout:0,
     args: ["--no-sandbox",'--disable-setuid-sandbox'],
   });
 
+  
 //**Slower version but more server friendly. It open sequential blocks of at most 4 tabs each per request  */
   /*function splitArrayIntoGroups(arr, groupSize) {
     return arr.reduce((result, element, index) => {
@@ -49,7 +57,8 @@ async function scrapingFunction(instrument, filters,timeout) {
   }
 */
 
-
+  
+  //GET PAGES WITH HEADLESS TO TRUE
 
   const scrapePromises = pages.map(
     async (page) => await scrapePage(browser, instrument, page, timeout)
@@ -108,11 +117,12 @@ async function scrapingFunction(instrument, filters,timeout) {
  */
 async function scrapePage(browser, instrument, page,timeout) {
   const driver = await browser.newPage();
+  await driver.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36');
   if(timeout)
     driver.setDefaultNavigationTimeout(timeout*1000);
   try {
     //await driver.setCacheEnabled(false);
-    await driver.setViewport({ width: 1000, height: 500 });
+    await driver.setViewport({ width: 1000, height: 800 });
     await driver.goto(page["url"], {waitUntil:'load'}); // Navigate to the page
     const data = await scrapeContent(driver, instrument, page);
     return data;
