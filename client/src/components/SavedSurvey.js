@@ -77,6 +77,7 @@ const SavedSurvey = ({ data, removeSurvey, updateSurvey, setIsLoading }) => {
             samples: 15
         })
             .then(res => {
+                console.log(res)
                 setIsLoading(false)
                 setModalOptions({
                     title: 'Andamento ricerca',
