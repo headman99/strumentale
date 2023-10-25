@@ -2,7 +2,6 @@ import React from 'react'
 import { imgFileTypes } from '@/utils/imgFileTypes'
 import { useIsMobile } from '../hooks/useIsMobile'
 
-
 const Item = ({ data, saved, handleSaveItem, handleUnsaveItem }) => {
     const {
         id,
@@ -15,7 +14,6 @@ const Item = ({ data, saved, handleSaveItem, handleUnsaveItem }) => {
         url,
         siteName
     } = data
-    
 
     let isMobile = useIsMobile()
 
@@ -180,7 +178,7 @@ const Item = ({ data, saved, handleSaveItem, handleUnsaveItem }) => {
                                 </div>
                             </>
                         ) : (
-                            <div className='mobile-survey-container'>
+                            <div className="mobile-survey-container">
                                 <div
                                     className="mobile-survey-price-container d-flex flex-row align-items-center"
                                     style={{ bottom: 0 }}>
@@ -195,24 +193,20 @@ const Item = ({ data, saved, handleSaveItem, handleUnsaveItem }) => {
                                 </div>
 
                                 {!saved ? (
-                                            <button
-                                                className="btn btn-outline whiteback btn-sm mt-2"
-                                                type="button"
-                                                onClick={() =>
-                                                    handleSaveItem(data)
-                                                }>
-                                                Salva
-                                            </button>
-                                        ) : (
-                                            <button
-                                                className="btn btn-outline whiteback btn-sm mt-2"
-                                                type="button"
-                                                onClick={() =>
-                                                    handleUnsaveItem(data)
-                                                }>
-                                                Dimentica
-                                            </button>
-                                        )}
+                                    <button
+                                        className="btn btn-outline whiteback btn-sm mt-2"
+                                        type="button"
+                                        onClick={() => handleSaveItem(data)}>
+                                        Salva
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="btn btn-outline whiteback btn-sm mt-2"
+                                        type="button"
+                                        onClick={() => handleUnsaveItem(data)}>
+                                        Dimentica
+                                    </button>
+                                )}
                             </div>
                         )}
                     </div>

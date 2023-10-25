@@ -19,7 +19,7 @@ const GENERAL_FILTERS = {
 async function scrapingFunction(instrument, filters,timeout) {
   // Create an instance of the browser
   const browser = await pt.launch({
-    headless: "new",
+    headless: "false",
     defaultViewport: null,
     timeout:0,
     args: ["--no-sandbox",'--disable-setuid-sandbox'],

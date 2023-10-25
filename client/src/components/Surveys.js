@@ -3,7 +3,6 @@ import SavedSurvey from './SavedSurvey'
 import { get_survey, delete_survey, update_survey } from '@/lib/api'
 import Loading from './Loading'
 
-
 function Surveys() {
     const [surveys, setSurveys] = useState(null)
     const [isLoading, setIsLoading] = useState(true)

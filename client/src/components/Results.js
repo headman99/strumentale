@@ -24,8 +24,8 @@ function Results(props) {
             name: name,
             url: url,
             img: img,
-            description:description,
-            siteName:siteName   
+            description: description,
+            siteName: siteName
         })
             .then(() => {
                 props.transition_alert({

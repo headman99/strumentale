@@ -66,13 +66,13 @@ const Login = ({ redirectPath }) => {
                     <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block ">
                         <Link
                             href="/register"
-                            style={{ color: 'white',zIndex:200 }}
+                            style={{ color: 'white', zIndex: 200 }}
                             className="ml-4 text-sm  underline">
                             Registrazione
                         </Link>
                         <Link
                             href="/dashboard"
-                            style={{ color: 'white', zIndex:200}}
+                            style={{ color: 'white', zIndex: 200 }}
                             className="ml-4 text-sm  underline">
                             Dashboard
                         </Link>

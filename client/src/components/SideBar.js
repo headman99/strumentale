@@ -41,14 +41,16 @@ function SideBar({ handleShowModalConfirm }) {
                     <li>
                         <button
                             className="link-button"
-                            onClick={e => handleShowModalConfirm(e,'/searches')}>
+                            onClick={e =>
+                                handleShowModalConfirm(e, '/searches')
+                            }>
                             Ricerche salvate
                         </button>
                     </li>
                     <li>
                         <button
                             className="link-button"
-                            onClick={e => handleShowModalConfirm(e,'/items')}>
+                            onClick={e => handleShowModalConfirm(e, '/items')}>
                             Oggetti salvati
                         </button>
                     </li>

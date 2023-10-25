@@ -11,13 +11,12 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 import { useIsMobile } from '@/hooks/useIsMobile'
 
-
 const Navigation = ({ user }) => {
     const router = useRouter()
     //const { logout } = useAuth()
 
     const [modalOptions, setModalOptions] = useState(null)
-    let isMobile = useIsMobile();
+    let isMobile = useIsMobile()
 
     const handleShowModalConfirm = (e, path) => {
         e.preventDefault()
@@ -54,7 +53,7 @@ const Navigation = ({ user }) => {
                         <ApplicationLogo />
                     </div>
                 </div>
-                { !isMobile?
+                {!isMobile ? (
                     <div>
                         <nav
                             className="bg-white border-b border-gray-100"
@@ -162,10 +161,9 @@ const Navigation = ({ user }) => {
                             </div>
                         </nav>
                     </div>
-                    : <SideBar handleShowModalConfirm={handleShowModalConfirm} /> 
-                }
-                 
-                
+                ) : (
+                    <SideBar handleShowModalConfirm={handleShowModalConfirm} />
+                )}
             </div>
         </>
     )

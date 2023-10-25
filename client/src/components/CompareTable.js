@@ -65,7 +65,7 @@ const CompareTable = ({ data }) => {
                                 el => el?.siteName === site.siteName
                             )[0]
                             return (
-                                <div className="mobile-table-cell" key={site} >
+                                <div className="mobile-table-cell" key={site}>
                                     <a
                                         target="_blank"
                                         className="cell-image"

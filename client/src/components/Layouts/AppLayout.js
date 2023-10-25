@@ -8,7 +8,7 @@ const AppLayout = ({ header, children }) => {
     return (
         <div style={{ backgroundColor: '#3a1f78' }} className="min-h-screen ">
             <Navigation user={user} />
-            
+
             {/* Page Heading */}
             {header && (
                 <header className="bg-white shadow">

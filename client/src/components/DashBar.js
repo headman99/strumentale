@@ -30,7 +30,7 @@ const DashBar = ({
     const [rating, setRating] = useState('')
     const [freeShipping, setFreeShipping] = useState(false)
     const router = useRouter()
-    
+
     function buildFilters() {
         return {
             price: {
@@ -372,7 +372,7 @@ const DashBar = ({
                                             e.preventDefault()
                                             handleSave()
                                         }}>
-                                        Salva
+                                        Salva Ricerca
                                     </button>
                                     <button
                                         disabled={
