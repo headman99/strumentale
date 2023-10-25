@@ -102,19 +102,18 @@ const pages = [
     },
     {
         id: '006',
-        url: 'https://reverb.com',
-        siteName: 'reverb',
-        shipmentRetriever: shipmentRetrievers.reverb,
+        url: 'https://www.bananamusic.it/',
+        siteName: 'bananamusic',
         postProcess: postProcessors.changeFormat,
         selectors: {
-            searchBar: '.site-search__controls__input',
-            productsList: '.rc-listing-grid__content',
-            product: '.rc-listing-grid__item',
-            productContent: '.rc-listing-card__inner',
+            searchBar: '.ais-SearchBox-input',
+            productsList: '.ais-Hits-list',
+            product: '.ais-Hits-item',
+            productContent: '.hit',
             image: 'img',
-            name: '.rc-listing-card__header a',
-            url: '.rc-listing-card__header a',
-            price: '.rc-price-block__price',
+            name: '.hit-name',
+            url: '.hit-name > a',
+            price: 'span[itemprop="price"]',
         }
     },
     {

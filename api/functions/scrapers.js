@@ -134,16 +134,24 @@ async function scrapeContent(driver, instrument, page) {
     // RETRIEVE SEARCHBAR
     const input = await driver.waitForSelector(page.selectors.searchBar, {
       timeout: ELEMENT_LOAD_TIMEOUT,
+      waitUntil: ['domcontentloaded']
     });
+    await driver.waitForTimeout(250)  // Delay to avoid problems when typing
 
     await input.type(instrument);
     await input.press("Enter");
 
     // GET RESULTS LIST
+    await driver.waitForTimeout(1000) // Delay to force at least one second to load the products list
     const list = await driver.waitForSelector(page.selectors.productsList, {
-      waitUntil: "load",
+      waitUntil: ["domcontentloaded"],
       timeout: ELEMENT_LOAD_TIMEOUT,
     });
+
+    // WAIT FOR AT LEAST ONE ELEMENT OF THE THE LIST TO BE LOADED
+    await list.waitForSelector(page.selectors.product, {
+      timeout: ELEMENT_LOAD_TIMEOUT
+    })
 
     // GET ITEMS FROM LIST
     let items = await list.$$(page.selectors.product);
