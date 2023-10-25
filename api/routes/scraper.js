@@ -33,8 +33,8 @@ router.get("/",async (req,res)=>{
 })
 
 router.get("/get_surveys",async (req,res) =>{
-  axiosInstance.get("https://be.strumentale.it/node/get_surveys").then(res => {
-    res.status(200).json(res)
+  axiosInstance.get("https://be.strumentale.it/node/get_surveys").then(r => {
+    res.status(200).json(r)
   })
 })
 
