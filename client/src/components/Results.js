@@ -19,7 +19,6 @@ function Results(props) {
     const item_list = props.data.item_list
     const handleSaveItem = data => {
         const { name, url, img, description, siteName } = data
-        console.log(description)
         save_item({
             name: name,
             url: url,

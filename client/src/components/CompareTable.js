@@ -6,6 +6,7 @@ const CompareTable = ({ data }) => {
     const chunkSize = 6 // Number of items to display in each table
     let isMobile = useIsMobile()
     const tables = []
+    console.log(data)
 
     for (let i = 0; i < pages.length; i += chunkSize) {
         const chunk = pages.slice(i, i + chunkSize)

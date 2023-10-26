@@ -40,7 +40,6 @@ function Surveys() {
     useEffect(() => {
         get_survey()
             .then(response => {
-                console.log(response)
                 setSurveys(response.data)
                 setIsLoading(false)
             })

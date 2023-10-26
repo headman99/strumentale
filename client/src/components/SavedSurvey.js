@@ -15,7 +15,7 @@ import { BiFilterAlt } from 'react-icons/bi'
 const SavedSurvey = ({ data, removeSurvey, updateSurvey, setIsLoading }) => {
     const [modalOptions, setModalOptions] = useState(null)
     const router = useRouter()
-
+    console.log(data)
     const button_filler = {
         flex: 1,
         display: 'flex',

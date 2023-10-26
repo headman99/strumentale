@@ -27,7 +27,7 @@ const pages = [
     {
         id: '005',
         url: 'https://bananamusic.it/',
-        siteName: 'reverb',
+        siteName: 'bananamusic',
         logo: `bananamusic.webp`
     },
     {
