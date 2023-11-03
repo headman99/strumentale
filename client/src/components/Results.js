@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Item from './Item'
 import { save_item } from '@/lib/api'
 import Loading from './Loading'
@@ -7,6 +7,8 @@ import Loading from './Loading'
  * Component in charge of displaying the results list
  */
 function Results(props) {
+    const [message, setMessage] = useState('')
+
     if (props.error)
         return (
             <div className="no-data">
@@ -49,9 +51,36 @@ function Results(props) {
             })
     }
 
+    useEffect(() => {
+        let timeout = null
+        if (message) setMessage('')
+        if (props?.isLoading) {
+            timeout = setTimeout(() => {
+                setMessage(
+                    'La ricerca potrebbe impiegare più del previsto a causa di alto numero di richieste, attendere o riprovare più tardi.'
+                )
+            }, 5000)
+        }
+
+        return () => {
+            if (timeout) clearTimeout(timeout)
+        }
+    }, [props?.isLoading])
+
     // Return the fetched data
     return (
         <>
+            <div
+                className="fade-in"
+                style={{
+                    color: '#fff',
+                    textAlign: 'center',
+                    marginTop: 10,
+                    marginBottom: 10,
+                    position: 'relative'
+                }}>
+                {message}
+            </div>
             <Loading isLoading={props.isLoading} dataload={true} />
             {!props.isLoading && (
                 <div className="fade-in">

@@ -58,7 +58,8 @@ function Surveys() {
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    paddingTop: 50
+                    paddingTop: 50,
+                    paddingBottom: 10
                 }}>
                 {surveys &&
                     surveys.length > 0 &&

@@ -108,7 +108,7 @@ const Navigation = ({ user }) => {
                                             <NavLink
                                                 href="https://www.strumentale.it"
                                                 target="_blank">
-                                                Vai al sito
+                                                Ritorna al sito
                                                 <FiArrowUpRight
                                                     style={{
                                                         display: 'inline-block'
