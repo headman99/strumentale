@@ -28,7 +28,7 @@ async function scrapingFunction(instrument, filters,timeout) {
   const browser = await pt.launch({
     headless: 'new',
     defaultViewport: null,
-    timeout:0,
+    timeout:40*1000,
     args: ["--no-sandbox",'--disable-setuid-sandbox'],
   });
 

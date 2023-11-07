@@ -7,17 +7,8 @@ import Loading from './Loading'
  * Component in charge of displaying the results list
  */
 function Results(props) {
+    const timeout_time = 30 // seconds
     const [message, setMessage] = useState('')
-
-    if (props.error)
-        return (
-            <div className="no-data">
-                Caricamento fallito, ricaricare al pagina. L'elemento che cerchi
-                potrebbe non essere stato trovato.
-            </div>
-        )
-    if (!props.data) return <div />
-
     const item_list = props.data.item_list
     const handleSaveItem = data => {
         const { name, url, img, description, siteName } = data
@@ -59,7 +50,7 @@ function Results(props) {
                 setMessage(
                     'La ricerca potrebbe impiegare più del previsto a causa di alto numero di richieste, attendere o riprovare più tardi.'
                 )
-            }, 5000)
+            }, timeout_time * 1000)
         }
 
         return () => {
@@ -70,37 +61,47 @@ function Results(props) {
     // Return the fetched data
     return (
         <>
-            <div
-                className="fade-in"
-                style={{
-                    color: '#fff',
-                    textAlign: 'center',
-                    marginTop: 10,
-                    marginBottom: 10,
-                    position: 'relative'
-                }}>
-                {message}
-            </div>
-            <Loading isLoading={props.isLoading} dataload={true} />
-            {!props.isLoading && (
-                <div className="fade-in">
-                    {item_list.map((item, index) => (
-                        <Item
-                            key={index}
-                            data={{
-                                name: item.name,
-                                description: item.description,
-                                rate: item.rate,
-                                freeShipment: item.freeShipment,
-                                price: item.price,
-                                img: item.img,
-                                url: item.url,
-                                siteName: item.siteName
-                            }}
-                            handleSaveItem={handleSaveItem}
-                        />
-                    ))}
+            {props?.error ? (
+                <div className="no-data">
+                    Caricamento fallito, ricaricare al pagina. L'elemento che
+                    cerchi potrebbe non essere stato trovato oppure il traffico
+                    di rete è troppo elevato.
                 </div>
+            ) : (
+                <>
+                    <div
+                        className="fade-in"
+                        style={{
+                            color: '#fff',
+                            textAlign: 'center',
+                            marginTop: 10,
+                            marginBottom: 10,
+                            position: 'relative'
+                        }}>
+                        {message}
+                    </div>
+                    <Loading isLoading={props.isLoading} dataload={true} />
+                    {!props.isLoading && (
+                        <div className="fade-in">
+                            {item_list.map((item, index) => (
+                                <Item
+                                    key={index}
+                                    data={{
+                                        name: item.name,
+                                        description: item.description,
+                                        rate: item.rate,
+                                        freeShipment: item.freeShipment,
+                                        price: item.price,
+                                        img: item.img,
+                                        url: item.url,
+                                        siteName: item.siteName
+                                    }}
+                                    handleSaveItem={handleSaveItem}
+                                />
+                            ))}
+                        </div>
+                    )}
+                </>
             )}
         </>
     )

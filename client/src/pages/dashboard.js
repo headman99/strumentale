@@ -44,7 +44,7 @@ const Dashboard = () => {
         try {
             let controller = new AbortController()
             abortController.current = controller
-            const res = await axiosInstance_node.get(urlQuery)
+            const res = await axiosInstance_node.get(urlQuery,{timeout:2000});
             setData(res.data)
             if (res.data) secureLocalStorage.setItem('data', res.data)
             setError(null)
@@ -86,7 +86,6 @@ const Dashboard = () => {
     //Decide wheter to display data present in localstorage
     useEffect(() => {
         const secure_data = secureLocalStorage.getItem('data')
-        console.log(secure_data)
         if (secure_data) setData(secure_data)
     }, [])
 

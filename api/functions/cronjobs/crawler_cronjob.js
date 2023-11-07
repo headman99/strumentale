@@ -2,7 +2,7 @@ const nodeCron = require("node-cron");
 const { scrapingFunction } = require("../scrapers");
 const { axiosInstance } = require("../axios");
 
-const CRONEX = "0 1 * * *"; // Every day at 1a.m minutes
+const CRONEX = "0 0 * * *"; // Every day at 1a.m minutes
 const timeout = 50; //  secondi di timeout per lo scraping con cron job
 
 function processBatch(params) {
@@ -71,6 +71,8 @@ nodeCron.schedule(
         });
     } catch (error) {
       console.log("ERRORE", error);
+      if(results?.length)
+          axiosInstance.post("/node/save_scrape_result",{data:results});
     }
   },
   {
