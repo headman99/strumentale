@@ -18,6 +18,7 @@ const DashBar = ({
     error,
     isLoading,
     transition_alert,
+    setError,
     abortController
 }) => {
     const [searchParam, setSearchParam] = useState('')
@@ -66,6 +67,7 @@ const DashBar = ({
     const handleSearch = e => {
         e.preventDefault()
         if (!searchParam) return null
+        setError(null)
         const filters = buildFilters()
         fetchData(searchParam, filters)
     }

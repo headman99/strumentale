@@ -44,7 +44,9 @@ const Dashboard = () => {
         try {
             let controller = new AbortController()
             abortController.current = controller
-            const res = await axiosInstance_node.get(urlQuery,{timeout:2000});
+            const res = await axiosInstance_node.get(urlQuery, {
+                timeout: 40 * 1000
+            })
             setData(res.data)
             if (res.data) secureLocalStorage.setItem('data', res.data)
             setError(null)
@@ -129,6 +131,7 @@ const Dashboard = () => {
                 fetchData={fetchData}
                 error={error}
                 transition_alert={setTransitionAlertOptions}
+                setError={setError}
             />
         </AppLayout>
     )
