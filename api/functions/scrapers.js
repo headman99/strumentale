@@ -11,7 +11,7 @@ const {
 } = require("./filters");
 
 const ITEMS_PER_SITE = 5;
-const ELEMENT_LOAD_TIMEOUT = 8000; // miliseconds
+const ELEMENT_LOAD_TIMEOUT = 7000; // miliseconds
 
 const GENERAL_FILTERS = {
   price: generalPriceFilter,
@@ -174,7 +174,6 @@ async function scrapeContent(driver, instrument, page) {
       });
       await bottom.scrollIntoView();
     }
-
     // GET DATA ITERATING OVER ITEMS
     for (const item of items) {
       let item_data = {};
@@ -198,8 +197,11 @@ async function scrapeContent(driver, instrument, page) {
           item_data.url = await item.$eval(page.selectors.url, (url) => {
             return url.getAttribute("href");
           });
-        else
-          item_data.url = item.getAttribute("href")
+        else{
+          const url = await item.evaluate(element => element.getAttribute('href'));
+          item_data.url = url
+        }
+          
 
         if (!item_data.url.includes("http"))
           item_data.url = `${page?.url}${
@@ -226,7 +228,7 @@ async function scrapeContent(driver, instrument, page) {
             item_data.description = "";
           }
         } catch (error) {
-          console.log("ATTRIBUTE ERROR: Impossible to retrieve description");
+          console.log(page.siteName + " ATTRIBUTE ERROR: Impossible to retrieve description");
         }
 
         // RETRIEVE PRICE (If there is en error, might happend the price is discounted)
@@ -268,7 +270,7 @@ async function scrapeContent(driver, instrument, page) {
         data.item_list.push(item_data);
       } catch (error) {
         // PER-ITEM EXCEPTION CONTROL (Skip item)
-        console.log("PER-ITEM ERROR: " + error);
+        console.log(page.siteName + " PER-ITEM ERROR: " + error);
       }
     }
   } catch (error) {

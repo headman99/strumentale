@@ -63,10 +63,21 @@ async function piazzostrumenti(item) {
     }
 }
 
+async function cittadellamusica(item) {
+    // For this website the shipping is usually free
+    try {
+        const freeShipment = true
+        return freeShipment
+    } catch {
+        return false;
+    }
+}
+
 module.exports = {
     strumentimusicali,
     mercatinomusicale,
     reverb,
     ebay,
-    piazzostrumenti
+    piazzostrumenti,
+    cittadellamusica
 }

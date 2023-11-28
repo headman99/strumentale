@@ -39,6 +39,8 @@ function cleanRange(price) {
 //                            SCORE FUNCTION
 // ---------------------------------------------------------------------
 function relevance_score(query, document) {
+    if(!query || !document)
+        return 0
     const query_vec = query.toLowerCase().split(' ')
     const doc_vec = document.toLowerCase().split(' ')
 
@@ -192,7 +194,8 @@ function sortRelevance(query, data) {
  * @returns the cleaned string
  */
 function cleanName(str) {
-    return str.toLowerCase().replace(/[^a-z0-9]/g, '')
+    return str?str.toLowerCase().replace(/[^a-z0-9]/g, ''):str
+    
 }
 /**
  * Compute the median of a list of values

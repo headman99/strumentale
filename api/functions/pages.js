@@ -167,6 +167,7 @@ const pages = [
         headless: false,
         siteName: 'cittadellamusica',
         postProcess: postProcessors.changeFormat,
+        shipmentRetriever: shipmentRetrievers.cittadellamusica,
         selectors: {
             searchBar: '#minisearch-input-top-search',
             productsList: '.search.results > .grid',
@@ -175,7 +176,7 @@ const pages = [
             image: '.product-image-wrapper > img',
             name: '.product-item-details > .text-xs.capitalize',
             url: 'this',
-            price: '.   product-item-details .price',
+            price: '.product-item-details .price',
             //discountedPrice: '.standard-price'
         }
     },
