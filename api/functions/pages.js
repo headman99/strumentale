@@ -175,7 +175,8 @@ const pages = [
             image: '.product-image-wrapper > img',
             name: '.product-item-details > .text-xs.capitalize',
             url: 'this',
-            price: '.price'
+            price: '.   product-item-details .price',
+            //discountedPrice: '.standard-price'
         }
     },
     {
