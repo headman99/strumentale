@@ -142,7 +142,7 @@ const pages = [
             discountedPrice: 'span',
         }
     },
-    {
+    /*{
         id: '008',
         url: 'https://www.bellusmusic.com',
         headless:false,
@@ -159,6 +159,23 @@ const pages = [
                 'div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > a:nth-child(3) > span:nth-child(1)',
             url: '.product-name',
             price: '.product-price.price.selling'
+        }
+    },*/
+    {
+        id: '008',
+        url: 'https://cittadellamusica.store',
+        headless: false,
+        siteName: 'cittadellamusica',
+        postProcess: postProcessors.changeFormat,
+        selectors: {
+            searchBar: '#minisearch-input-top-search',
+            productsList: '.search.results > .grid',
+            product: 'a',
+            productContent: 'a',
+            image: '.product-image-wrapper > img',
+            name: '.product-item-details > .text-xs.capitalize',
+            url: 'this',
+            price: '.price'
         }
     },
     {

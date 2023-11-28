@@ -193,9 +193,13 @@ async function scrapeContent(driver, instrument, page) {
         item_data.name = await item.$eval(page.selectors.name, (name) => {
           return name.innerText;
         });
-        item_data.url = await item.$eval(page.selectors.url, (url) => {
-          return url.getAttribute("href");
-        });
+
+        if(page.selectors.url!=='this')
+          item_data.url = await item.$eval(page.selectors.url, (url) => {
+            return url.getAttribute("href");
+          });
+        else
+          item_data.url = item.getAttribute("href")
 
         if (!item_data.url.includes("http"))
           item_data.url = `${page?.url}${
