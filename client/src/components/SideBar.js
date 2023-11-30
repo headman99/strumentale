@@ -67,6 +67,20 @@ function SideBar({ handleShowModalConfirm }) {
                             />
                         </NavLink>
                     </li>
+                    {/*<li className='mobile-filter-section'>
+                        <div className="mobile-filter-container">
+                            <div className="input-select">
+                                <input type="number" className="number"></input>
+                            </div>
+
+                            <div className="input-select">
+                                <input type="number" className="number"></input>
+                            </div>
+                            <div className="input-select">
+                                <input type="number" className="number"></input>
+                            </div>
+                        </div>
+                            </li>*/}
                 </ul>
             </div>
         </div>

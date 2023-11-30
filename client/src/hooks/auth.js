@@ -42,20 +42,26 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             await csrf()
 
             // Clear any previous errors
-            setErrors([])
+            setErrors({})
 
-            // Send the request with the CSRF token in the headers
-            await axios.post('/register', props)
+            const reg = await axios.post('/register', props)
             // If the request is successful, update the data using mutate()
             mutate()
+
+            return reg
         } catch (error) {
             // Handle errors
+            if (error.response && error.response.status === 400)
+                setErrors({email:error.response.data.message})
             if (error.response && error.response.status === 422) {
-                setErrors(error.response.data.errors)
+                setErrors({email:'Non sei autorizzato a proseguire'})
             } else {
                 // Handle other errors
                 console.error(error)
+                setErrors({password:'Si è verificato un errore. Riprova più tardi'})
             }
+
+            throw new Error("Mail non valida")
         }
     }
 
@@ -63,7 +69,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         try {
             await csrf()
 
-            setErrors([])
+            setErrors({})
             if (setStatus) setStatus(null)
 
             if (user?.email !== props.email && user?.email && props.email)
@@ -82,7 +88,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             // Handle errors
             if (error.response && error.response.status === 422) {
                 console.log(error.response)
-                setErrors([error.response.data.message])
+                setErrors({email:error.response.data.message})
             } else {
                 // Handle other errors
                 console.error(error)
@@ -94,7 +100,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
     const forgotPassword = async ({ setErrors, setStatus, email }) => {
         await csrf()
 
-        setErrors([])
+        setErrors({})
         setStatus(null)
 
         axios
@@ -103,14 +109,14 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .catch(error => {
                 if (error.response.status !== 422) throw error
 
-                setErrors(error.response.data.errors)
+                setErrors({email:error.response.data.errors})
             })
     }
 
     const resetPassword = async ({ setErrors, setStatus, ...props }) => {
         await csrf()
 
-        setErrors([])
+        setErrors({})
         setStatus(null)
 
         axios
@@ -121,7 +127,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .catch(error => {
                 if (error.response.status !== 422) throw error
 
-                setErrors(error.response.data.errors)
+                setErrors({email:error.response.data?.errors})
             })
     }
 

@@ -32,13 +32,13 @@ const SearchBar = ({
             </div>
             <div style={{ display: 'flex' }}>
                 <Button style={{ margin: '5px' }} onClick={onPressSearch}>
-                    Search
+                    Cerca
                 </Button>
                 <Button
                     style={{ margin: '5px' }}
                     onClick={onPressSave}
                     disabled={!value}>
-                    Save search
+                    Salva ricerca
                 </Button>
             </div>
         </div>

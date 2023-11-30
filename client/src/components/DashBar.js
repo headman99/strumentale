@@ -11,6 +11,8 @@ import { FaBalanceScaleLeft } from 'react-icons/fa'
 import CompareTable from './CompareTable'
 import { HiViewList } from 'react-icons/hi'
 import { ToggleButton } from 'react-bootstrap'
+import { useIsMobile } from '@/hooks/useIsMobile'
+import { MyModal } from './MyModal'
 
 const DashBar = ({
     fetchData,
@@ -31,6 +33,14 @@ const DashBar = ({
     const [rating, setRating] = useState('')
     const [freeShipping, setFreeShipping] = useState(false)
     const router = useRouter()
+    const isMobile = useIsMobile()
+    const [modalOptions, setModalOptions] = useState(null)
+
+    /*
+     * Repeating code is never a good coding practice but because this is a feature added later in time and because the Dropdown component
+     * returns an error when reused multiple times in different components i decided to duplicate the code fot the filter section and adapt it to the Modal
+     * For future updates, removing the Dropdown component is suggested so that everything related to the filter form can be wrap up in a single component
+     */
 
     function buildFilters() {
         return {
@@ -117,13 +127,6 @@ const DashBar = ({
                             err?.response?.data?.exception
                     })
             })
-
-        // Schedule the execution of the webcrawler based on the crono expresion defined
-        // The first argument is the name used to identify the job
-        // TODO: Instead of calling here the scheduling, I should make a request to my API asking for it to do it
-        /*schedule.scheduleJob(`${searchParam}`, cronex, () => {
-            fetchData(searchParam, filters)
-        })*/
     }
 
     const handleKeyDown = event => {
@@ -224,7 +227,10 @@ const DashBar = ({
                                     }}>
                                     <button
                                         onClick={e => e.preventDefault()}
-                                        style={{ color: '#555', padding: 5 }}>
+                                        style={{
+                                            color: '#555',
+                                            padding: 5
+                                        }}>
                                         <FaAngleDown size={25} />
                                     </button>
                                 </Accordion.Header>
@@ -286,7 +292,9 @@ const DashBar = ({
                                             <div className="input-field">
                                                 <div className="input-select">
                                                     <input
-                                                        style={{ padding: 10 }}
+                                                        style={{
+                                                            padding: 10
+                                                        }}
                                                         className="number"
                                                         type={'number'}
                                                         max={5}
@@ -353,6 +361,7 @@ const DashBar = ({
                                 </Accordion.Body>
                             </Accordion.Item>
                         </Accordion>
+
                         <div className="row third">
                             <div className="toggle-filter" />
                             <div className="result-count">
@@ -422,7 +431,6 @@ const DashBar = ({
                     )}
                 </div>
             </div>
-            {/*<script src="js/extention/choices.js"></script>*/}
         </div>
     )
 }

@@ -1,7 +1,5 @@
 import Navigation from '@/components/Layouts/Navigation'
 import { useAuth } from '@/hooks/auth'
-import { useState } from 'react'
-import TransitionAlerts from '../TransitionAlerts'
 
 const AppLayout = ({ header, children }) => {
     const { user } = useAuth({ middleware: 'auth' })

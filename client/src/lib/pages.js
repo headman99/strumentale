@@ -36,11 +36,17 @@ const pages = [
         siteName: 'ebay',
         logo: `ebay.svg`
     },
-    {
+    /*{
         id: '007',
         url: 'https://www.bellusmusic.com/',
         siteName: 'bellusmusic',
         logo: `bellusmusic.png`
+    },*/
+    {
+        id: '007',
+        url: 'https://www.cittadellamusica.com/',
+        siteName: 'cittadellamusica',
+        logo: `cittadellamusica.svg`
     },
     {
         id: '008',

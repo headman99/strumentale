@@ -4,13 +4,10 @@ import { useRef, useState, useEffect } from 'react'
 import useSWR from 'swr'
 import dynamic from 'next/dynamic'
 import TransitionAlerts from '@/components/TransitionAlerts'
-import axios, { axiosInstance_node } from '../lib/axios'
+import { axiosInstance_node } from '../lib/axios'
 import Link from 'next/link'
 import secureLocalStorage from 'react-secure-storage'
 import { useAuth } from '@/hooks/auth'
-//import DashBar from '@/components/DashBar'
-
-//import DashBar from '@/components/DashBar';
 
 const DashBar = dynamic(() => import('@/components/DashBar'), { ssr: false })
 

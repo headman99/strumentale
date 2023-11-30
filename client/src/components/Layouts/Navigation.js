@@ -1,14 +1,11 @@
 import ApplicationLogo from '@/components/ApplicationLogo'
 import Dropdown from '@/components/Dropdown'
 import NavLink from '@/components/NavLink'
-import { useAuth } from '@/hooks/auth'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { FiArrowUpRight } from 'react-icons/fi'
 import { MyModal } from '../MyModal'
 import SideBar from '../SideBar'
-import Link from 'next/link'
-import { useEffect } from 'react'
 import { useIsMobile } from '@/hooks/useIsMobile'
 
 const Navigation = ({ user }) => {

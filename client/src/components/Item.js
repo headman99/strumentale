@@ -30,10 +30,6 @@ const Item = ({ data, saved, handleSaveItem, handleUnsaveItem }) => {
         return formatter.format(priceString) // Return the string formatted
     }
 
-    /*const checkImgFormat = () =>{
-        
-    }*/
-
     return (
         <div className="container" key={name} style={{ marginTop: '1rem' }}>
             <div className="d-flex justify-content-center row">
@@ -115,8 +111,6 @@ const Item = ({ data, saved, handleSaveItem, handleUnsaveItem }) => {
                                         <div className="mt-1 mb-1 spec-1">
                                             <span>{description}</span>
                                         </div>
-                                        {/*<div class="mt-1 mb-1 spec-1"><span>Unique design</span><span class="dot"></span><span>For men</span><span class="dot"></span><span>Casual<br /></span></div>
-                                <p class="text-justify text-truncate para mb-0">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.<br></br></p> */}
                                     </div>
                                     <div className="img-description-container">
                                         <img

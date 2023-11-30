@@ -11,5 +11,6 @@ export const imgFileTypes = {
     seicordeshop: 'jpg',
     strumentimusicali: 'svg',
     thomann: 'svg',
-    bananamusic: 'webp'
+    bananamusic: 'webp',
+    cittadellamusica: 'svg'
 }

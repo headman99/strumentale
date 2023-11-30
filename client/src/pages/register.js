@@ -21,19 +21,22 @@ const Register = () => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [passwordConfirmation, setPasswordConfirmation] = useState('')
-    const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState({})
 
-    const submitForm = event => {
+    const submitForm = async event => {
         event.preventDefault()
 
-        register({
-            name,
-            email,
-            password,
-            password_confirmation: passwordConfirmation,
-            setErrors
-        }).then(() => router.replace('/login'))
+        try {
+            const reg = await register({
+                name,
+                email,
+                password,
+                setErrors
+            })    
+            router.push("/login")
+        } catch(err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -54,7 +57,7 @@ const Register = () => {
             </div>
             <AuthCard
                 logo={
-                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
+                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" disableLink={true}/>
                 }>
                 <form onSubmit={submitForm}>
                     {/* Name */}
@@ -71,7 +74,7 @@ const Register = () => {
                             autoFocus
                         />
 
-                        <InputError messages={errors.name} className="mt-2" />
+                        <InputError messages={errors?.name} className="mt-2" />
                     </div>
 
                     {/* Email Address */}
@@ -87,7 +90,7 @@ const Register = () => {
                             required
                         />
 
-                        <InputError messages={errors.email} className="mt-2" />
+                        <InputError messages={errors?.email} className="mt-2" />
                     </div>
 
                     {/* Password */}
@@ -105,34 +108,13 @@ const Register = () => {
                         />
 
                         <InputError
-                            messages={errors.password}
+                            messages={errors?.password}
                             className="mt-2"
                         />
                     </div>
 
                     {/* Confirm Password */}
-                    <div className="mt-4">
-                        <Label htmlFor="passwordConfirmation">
-                            Conferma password
-                        </Label>
-
-                        <Input
-                            id="passwordConfirmation"
-                            type="password"
-                            value={passwordConfirmation}
-                            className="block mt-1 w-full"
-                            onChange={event =>
-                                setPasswordConfirmation(event.target.value)
-                            }
-                            required
-                        />
-
-                        <InputError
-                            messages={errors.password_confirmation}
-                            className="mt-2"
-                        />
-                    </div>
-
+            
                     <div className="flex items-center justify-end mt-4">
                         <Link
                             href="/login"

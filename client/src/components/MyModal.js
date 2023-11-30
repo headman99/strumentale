@@ -2,7 +2,7 @@ import Modal from 'react-bootstrap/Modal'
 import Form from 'react-bootstrap/Form'
 import { useEffect, useState } from 'react'
 
-export function MyModal({ options }) {
+export function MyModal({ options,content}) {
     const [textArea, setTextArea] = useState('')
     const [show, setShow] = useState(false)
 
