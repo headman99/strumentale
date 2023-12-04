@@ -18,8 +18,8 @@ function cleanPrice(price) {
  * @param {*} data
  */
 function changeFormat(price) {
-    price = price.replace(/[^0-9,]/g, '') // Remove all non-numerical characters except commas
-    price = price.replace(',', '.') // Replace , for . (5000,34 => 5000.34)
+    price = price?.replace(/[^0-9,]/g, '') // Remove all non-numerical characters except commas
+    price = price?.replace(',', '.') // Replace , for . (5000,34 => 5000.34)
 
     return parseFloat(price) // Return parsed data
 }
@@ -150,6 +150,11 @@ function lcs_score(query, document) {
   data.item_list = filteredItems;
 }*/
 
+/*Ensure that data that have no price,name or url are correctly eliminated*/
+function trustData(data){
+    data.item_list=data.item_list.filter(el => el?.price && el?.url && el?.name)
+}
+
 function sortRelevance(query, data) {
     const items = data.item_list
 
@@ -220,12 +225,8 @@ function compute_median(list) {
  * @param {*} data - data to clean outliers
  */
 function cleanOutliers(data) {
-    let prices = []
-
     // Retrieve prices
-    data.item_list.map(entry => {
-        prices.push(entry.price)
-    })
+    let prices = data.item_list.map(entry => entry.price)
 
     //const median = compute_median(prices);
     const topPrice = prices[0]
@@ -254,5 +255,6 @@ module.exports = {
     cleanRange,
     sortRelevance,
     cleanOutliers,
-    sortPrice
+    sortPrice,
+    trustData
 }

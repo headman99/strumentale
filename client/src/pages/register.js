@@ -32,9 +32,9 @@ const Register = () => {
                 email,
                 password,
                 setErrors
-            })    
-            router.push("/login")
-        } catch(err) {
+            })
+            router.push('/login')
+        } catch (err) {
             console.log(err)
         }
     }
@@ -57,7 +57,10 @@ const Register = () => {
             </div>
             <AuthCard
                 logo={
-                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" disableLink={true}/>
+                    <ApplicationLogo
+                        className="w-20 h-20 fill-current text-gray-500"
+                        disableLink={true}
+                    />
                 }>
                 <form onSubmit={submitForm}>
                     {/* Name */}
@@ -114,7 +117,7 @@ const Register = () => {
                     </div>
 
                     {/* Confirm Password */}
-            
+
                     <div className="flex items-center justify-end mt-4">
                         <Link
                             href="/login"

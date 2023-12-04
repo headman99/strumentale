@@ -52,16 +52,18 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
         } catch (error) {
             // Handle errors
             if (error.response && error.response.status === 400)
-                setErrors({email:error.response.data.message})
+                setErrors({ email: error.response.data.message })
             if (error.response && error.response.status === 422) {
-                setErrors({email:'Non sei autorizzato a proseguire'})
+                setErrors({ email: 'Non sei autorizzato a proseguire' })
             } else {
                 // Handle other errors
                 console.error(error)
-                setErrors({password:'Si è verificato un errore. Riprova più tardi'})
+                setErrors({
+                    password: 'Si è verificato un errore. Riprova più tardi'
+                })
             }
 
-            throw new Error("Mail non valida")
+            throw new Error('Mail non valida')
         }
     }
 
@@ -88,7 +90,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             // Handle errors
             if (error.response && error.response.status === 422) {
                 console.log(error.response)
-                setErrors({email:error.response.data.message})
+                setErrors({ email: error.response.data.message })
             } else {
                 // Handle other errors
                 console.error(error)
@@ -109,7 +111,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .catch(error => {
                 if (error.response.status !== 422) throw error
 
-                setErrors({email:error.response.data.errors})
+                setErrors({ email: error.response.data.errors })
             })
     }
 
@@ -127,7 +129,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated } = {}) => {
             .catch(error => {
                 if (error.response.status !== 422) throw error
 
-                setErrors({email:error.response.data?.errors})
+                setErrors({ email: error.response.data?.errors })
             })
     }
 

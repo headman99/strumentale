@@ -71,7 +71,6 @@ async function scrapingFunction(instrument, filters,timeout) {
       //allGroupPromises
       )
       .then((promisesData) => {
-       console.log("prmisesData=", promisesData)
         let data = { item_list: [] };
 
         // Merge the data from each promise
@@ -79,10 +78,11 @@ async function scrapingFunction(instrument, filters,timeout) {
           data.item_list = data.item_list.concat(pageData?.item_list);
         }
 
+        console.log(data)
         // All scraping tasks have completed
+        utils.trustData(data)
         utils.sortRelevance(instrument, data);
         utils.cleanOutliers(data);
-
         // APPLY GENERAL FILTERS AS POSTPROCESSING
         if (filters && filters!=='undefined') {
           const filtersConfig = filters;
@@ -176,6 +176,8 @@ async function scrapeContent(driver, instrument, page) {
     }
     // GET DATA ITERATING OVER ITEMS
     for (const item of items) {
+      if(!item)
+        throw new Error("No items found for page: " + page.siteName);
       let item_data = {};
       try {
         // Wait for items to be loaded
@@ -193,6 +195,9 @@ async function scrapeContent(driver, instrument, page) {
           return name.innerText;
         });
 
+        if(!item_data.name)
+          throw new Error("Name not found for an item in page "+ page.siteName + ", item discarded!");
+
         if(page.selectors.url!=='this')
           item_data.url = await item.$eval(page.selectors.url, (url) => {
             return url.getAttribute("href");
@@ -201,17 +206,17 @@ async function scrapeContent(driver, instrument, page) {
           const url = await item.evaluate(element => element.getAttribute('href'));
           item_data.url = url
         }
+
+        if(!item_data.url)
+          throw new Error("Url link not found for an item in page "+ page.siteName + ", item discarded!");
           
-
         if (!item_data.url.includes("http"))
-          item_data.url = `${page?.url}${
-            !item_data?.url.startsWith("/") ? "/" : ""
-          }${item_data?.url}`;
+          item_data.url = `${page?.url}${!item_data?.url.startsWith("/") ? "/" : ""}${item_data?.url}`;
 
-        if (page.rateRetriever) {
+        if (page.rateRetriever && item) {
           item_data.rate = await page.rateRetriever(item);
         }
-        if (page.shipmentRetriever) {
+        if (page.shipmentRetriever && item) {
           item_data.freeShipment = await page.shipmentRetriever(item);
         }
 
@@ -245,16 +250,19 @@ async function scrapeContent(driver, instrument, page) {
           );
         } finally {
           // In any case, postprocess the price.
+          if(!item_data.price)
+            throw new Error("Price not found for an item in page "+ page.siteName + ", item discarded!");
+
           item_data.price = page.postProcess(item_data.price);
         }
 
         // If one of the fields is empty, skip item. (Exception will be catch)
         if (
-          item_data.name == "" ||
-          item_data.price == null ||
-          item_data.url == ""
+          !item_data?.name ||
+          !item_data?.price ||
+          !item_data?.url
         ) {
-          throw new Error("Field not found");
+          throw new Error("Field not found for an item in page "+ page.siteName + ", item discarded!");
         }
 
         const img = await item.$eval(page.selectors.image, (image) => {

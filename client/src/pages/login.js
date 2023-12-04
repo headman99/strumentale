@@ -29,7 +29,10 @@ const Login = ({ redirectPath }) => {
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        if (router.query.reset?.length > 0 && Object.keys(errors).length === 0) {
+        if (
+            router.query.reset?.length > 0 &&
+            Object.keys(errors).length === 0
+        ) {
             setStatus(atob(router.query.reset))
         } else {
             setStatus(null)
@@ -80,7 +83,10 @@ const Login = ({ redirectPath }) => {
                 </div>
                 <AuthCard
                     logo={
-                        <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" disableLink={true}/>
+                        <ApplicationLogo
+                            className="w-20 h-20 fill-current text-gray-500"
+                            disableLink={true}
+                        />
                     }>
                     {/* Session Status */}
                     <AuthSessionStatus className="mb-4" status={status} />
@@ -100,7 +106,10 @@ const Login = ({ redirectPath }) => {
                                 autoFocus
                             />
 
-                            <InputError messages={errors?.email} className="mt-2" />
+                            <InputError
+                                messages={errors?.email}
+                                className="mt-2"
+                            />
                         </div>
 
                         {/* Password */}
