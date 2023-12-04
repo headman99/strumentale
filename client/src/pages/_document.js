@@ -19,6 +19,7 @@ export default function Document() {
                     href="https://fonts.googleapis.com/css?family=Lato:400,600,700"
                     rel="stylesheet"
                 />
+                <link rel="icon" href="favicon.ico?v=1" />
             </Head>
             <body>
                 <Main />
