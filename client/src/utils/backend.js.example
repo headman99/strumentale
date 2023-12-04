@@ -1,0 +1,2 @@
+export const NODE_BACKEND = 'https://crawler.strumentale.it/'
+//export const NODE_BACKEND = 'http://localhost:8800'
