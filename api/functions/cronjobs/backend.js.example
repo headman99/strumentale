@@ -1,2 +1,0 @@
-const LARAVEL_BACKEND='https://be.strumentale.it'
-module.exports = {LARAVEL_BACKEND}
